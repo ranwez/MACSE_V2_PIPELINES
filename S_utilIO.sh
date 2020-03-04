@@ -3,7 +3,7 @@ set -euo pipefail
 
 function get_in_file_param(){
   local file = $(readlink -f "$2")
-  if [[ ! -f $file ]];then
+  if [[ ! -f $file ]]; then
     printf "Problem with option $1, File $file does not exist"
     quit_pb_option
   fi
@@ -12,7 +12,7 @@ function get_in_file_param(){
 
 function get_out_file_param(){
   local file = $(readlink -f "$2")
-  if [[ -f $file ]];then
+  if [[ -f $file ]]; then
     printf "Problem with option $1, File $file already  exist"
     quit_pb_option
   fi
