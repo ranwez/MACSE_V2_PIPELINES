@@ -5,8 +5,11 @@ function quit_pb_option() {
     printf "\nOptions : --in_refSeq --in_seqFile [--in_geneticCode] [--out_refAlign] [--debug]\n"
     exit 1
 }
-source S_utilIO.sh
-trap clean_tmp_dir $tmp_dir EXIT
+
+my_dir="$(dirname "$0")"
+source "$my_dir"/S_utilIO.sh
+
+trap clean_tmp_dir "$tmp_dir" EXIT
 
 # get parameters
 debug=0
