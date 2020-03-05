@@ -85,7 +85,7 @@ seqtk subseq relevant_seq.fasta representatives_id > representatives_id.fasta
 # the export does not handle the genetic genetic_code
 cp -r REF_ALIGN $wd_dir
 cp -r $tmp_dir $wd_dir
-cp REF_ALIGN/refAlign_final_align_NT.aln  $wd_dir/refAlign_final_NT.aln
+cp REF_ALIGN/refAlign_final_mask_align_NT.aln  $wd_dir/refAlign_final_NT.aln
 
 #vsearch -cluster_smallmem in.fasta --strand plus --uc clust_res --usersort --centroids centroids.fasta --id 0.7
 #qsub -b y -N buildRef -q normal.q "/homedir/ranwez/GITHUB/macse_barcode/S_buildRefAlign.sh --in_seqFile DATA/Mammalia_BOLD_141145seq_2020.fasta --in_refSeq DATA/Homo_sapiens_NC_012920_COI-5P_ref.fasta --debug"
