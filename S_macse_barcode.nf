@@ -20,7 +20,7 @@ process enrichNoIns {
 
       """
       #echo $seqF ${params.refAlign} ${params.gc}
-      java -jar /homedir/ranwez/MACSE_BARCODE/macse_v2.03.jar -prog enrichAlignment -align $refAlignFile -gc_def ${params.gc} -seq $refAlignFile -seq_lr $seqF -fixed_alignment_ON -new_seq_alterable_ON -fs_lr 10 -stop_lr 10 -maxFS_inSeq 2 -maxINS_inSeq 0 -maxSTOP_inSeq 1 -out_NT ${seqF.baseName}_NT.aln
+      java -jar /homedir/ranwez/MACSE_BARCODE/macse_v2.03.jar -prog enrichAlignment -align $refAlignFile -gc_def ${params.gc} -seq $refAlignFile -seq_lr $seqF -fixed_alignment_ON -new_seq_alterable_ON -fs_lr 10 -stop_lr 10 -maxFS_inSeq 2 -maxINS_inSeq 0 -maxSTOP_inSeq 1 -out_NT ${seqF.baseName}_NT.aln -fixed_alignment_ON -output_only_added_seq_ON
       """
 }
 
