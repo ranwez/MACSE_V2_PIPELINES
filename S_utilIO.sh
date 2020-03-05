@@ -8,7 +8,7 @@ function get_in_file_param(){
     printf "Problem with option $1, File $file does not exist" >&2
     has_problem=1
   fi
-  echo $has_problem
+  echo $file
   return $has_problem
 }
 
@@ -41,6 +41,6 @@ function get_tmp_dir(){
 # in debug mode ($1=1), do not delete the temporary directory passed as $2
 function clean_tmp_dir(){
   if (( $1==0 )); then
-     rm -rf "$2"
+    # rm -rf "$2"
   fi
 }
