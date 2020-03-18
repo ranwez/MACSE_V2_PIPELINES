@@ -3,6 +3,7 @@
 params.refAlign="refAlign.fasta"
 params.seqToAlign="allSeq.fasta"
 params.javaMem="600m"
+params.resDIR="MACSE_BARCODE_RESULTS"
 params.gc="2"
 
 
@@ -14,7 +15,7 @@ Channel
 process enrichNoIns {
     input:
       file seqF from fasta_split
-      file 'refAlignFile' from file(params.refAlign)
+      file refAlignFile from file(params.refAlign)
     output:
       file "${seqF.baseName}_NT.aln" into splitEnrichAln
       file "${seqF.baseName}_stats.csv" into splitEnrichStat
@@ -23,9 +24,8 @@ process enrichNoIns {
       """
       . /etc/profile.d/modules.sh
       module load system/java/jre8
-      #echo $seqF ${params.refAlign} ${params.gc}
       java -XX:MaxMetaspaceSize=${params.javaMem} -Xms250m -Xmx${params.javaMem} \
-        -jar /homedir/ranwez/MACSE_BARCODE/macse_v2.03.jar -prog enrichAlignment \
+          -jar /homedir/ranwez/MACSE_BARCODE/macse_v2.03.jar -prog enrichAlignment \
           -align $refAlignFile -gc_def ${params.gc} -seq $refAlignFile -seq_lr $seqF \
           -fixed_alignment_ON -new_seq_alterable_ON -fs_lr 10 -stop_lr 10 \
           -maxFS_inSeq 2 -maxINS_inSeq 0 -maxSTOP_inSeq 1 \
@@ -35,7 +35,7 @@ process enrichNoIns {
 }
 
 process mergeNoIns{
-   publishDir '/homedir/ranwez/MACSE_BARCODE/NEXTRES/', mode: 'copy', overwrite: false
+   publishDir "$workflow.launchDir/$params.resDIR", mode: 'copy', overwrite: false
    input:
      file alignList from splitEnrichAln.collect()
 
@@ -49,14 +49,14 @@ process mergeNoIns{
     done
 
 
-    cp alignAll_noIns.aln /homedir/ranwez/MACSE_BARCODE/TEST_MMSEQ2/
+    #cp alignAll_noIns.aln /homedir/ranwez/MACSE_BARCODE/TEST_MMSEQ2/
     """
 
 }
 
 process mergeNoInsStat{
   input:
-    file allStatFile from splitEnrichStat.collectFile(storeDir:'/homedir/ranwez/MACSE_BARCODE/TEST_MMSEQ2/', name:'alignAll_noIns.csv', keepHeader:true)
+    file allStatFile from splitEnrichStat.collectFile(storeDir:"$workflow.launchDir/$params.resDIR", name:'alignAll_noIns.csv', keepHeader:true)
   output:
     file allStatFile
     """
