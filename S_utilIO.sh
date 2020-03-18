@@ -24,13 +24,25 @@ function get_out_file_param(){
   return $has_problem
 }
 
-function get_in_dir_param(){
+function get_out_dir_param(){
   local dir=$(readlink -f "$2")
   if [ ! -e  $dir ]; then
     mkdir "$dir"
   fi
   echo $dir
 }
+
+
+function get_in_int_param(){
+  local re='^[0-9]+$'
+  if ! [[ $2 =~ $re ]]; then
+    printf "Problem with option $1,  $2 is not an integer" >&2
+    has_problem=1
+  fi
+  echo $2
+  return $has_problem
+}
+
 
 # $1 parameter allows to specify a prefix to identify your tmp folders
 function get_tmp_dir(){
