@@ -80,3 +80,4 @@ SEQTK (reverse complement DNA sequences)
 #singularity  build MACSE_barcoding_getRepSeq_V01.01.sif MACSE_barcoding_getRepSeq_V01.01_sing.def
 #singularity run MACSE_barcoding_getRepSeq_V01.01.sif
 #singularity run-help MACSE_barcoding_getRepSeq_V01.01.sif
+#./MACSE_barcoding_getRepSeq_V01.01.sif --in_refSeq Magnolia_officinalis_NC_020316.1_matK_ref.fasta --in_seqFile Magnoliophyta_BOLD_matK_107413seqs.fasta --in_geneticCode 11

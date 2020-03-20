@@ -74,7 +74,7 @@ java -jar -Xmx800m $macse -prog translateNT2AA -gc_def $in_geneticCode -seq $in_
 macse=
 
 cp $in_seqFile __seqs.fasta
-$mmseqs easy-search __seqs.fasta ref_seq_AA.fasta  res_search.tsv TMP --search-type 2 --translation-table 2 --split-memory-limit 70G --format-output "query,qaln,qstart,qend,qcov"
+$mmseqs easy-search __seqs.fasta ref_seq_AA.fasta  res_search.tsv TMP --search-type 2 --translation-table $in_geneticCode --split-memory-limit 70G --format-output "query,qaln,qstart,qend,qcov"
 
 awk '{if($5>0.5 && $4>$3) print $1}' res_search.tsv | sort -u > relevant_dir_id
 awk '{if($5>0.5 && $3>$4) print $1}' res_search.tsv | sort -u > relevant_rev_id
