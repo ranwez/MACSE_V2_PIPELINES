@@ -61,7 +61,7 @@ seqtk="seqtk"
 #as part of the Singularity container they are directly available
 seqtk="seqtk"
 mmseqs="mmseqs"
-macse="macse_v2.03.jar";
+macse=$SING_MACSE;
 ##############################################################
 ## identify sequences similar to the reference one
 ##############################################################

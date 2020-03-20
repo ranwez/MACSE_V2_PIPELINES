@@ -49,7 +49,7 @@ SEQTK (reverse complement DNA sequences)
     apt-get -y install openjdk-8-jre
 
     apt-get install -y seqtk
-	wget https://mmseqs.com/latest/mmseqs-linux-sse41.tar.gz;
+	  wget https://mmseqs.com/latest/mmseqs-linux-sse41.tar.gz;
     tar xvfz mmseqs-linux-sse41.tar.gz;
 
     wget https://bioweb.supagro.inra.fr/macse/releases/macse_v2.03.jar
@@ -66,6 +66,7 @@ SEQTK (reverse complement DNA sequences)
 
 %environment
     export PATH=/mmseqs/bin/:$PATH
+		export SING_MACSE="/macse_v2.03.jar"
     export LC_ALL=C
 
 
