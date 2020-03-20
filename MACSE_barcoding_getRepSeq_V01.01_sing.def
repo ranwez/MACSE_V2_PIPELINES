@@ -54,8 +54,8 @@ SEQTK (reverse complement DNA sequences)
 
     wget https://bioweb.supagro.inra.fr/macse/releases/macse_v2.03.jar
 
-    wget https://github.com/ranwez/macse_barcode/blob/master/S_getRepresentativeSeqs.sh
-    wget https://github.com/ranwez/macse_barcode/blob/master/S_utilIO.sh
+    wget https://raw.githubusercontent.com/ranwez/macse_barcode/master/S_getRepresentativeSeqs.sh
+    wget https://raw.githubusercontent.com/ranwez/macse_barcode/master/S_utilIO.sh
 
     chmod +x S_*.sh
 
