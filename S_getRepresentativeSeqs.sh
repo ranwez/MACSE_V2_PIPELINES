@@ -52,20 +52,33 @@ trap 'clean_tmp_dir $debug "$tmp_dir"' EXIT
 cd $tmp_dir
 
 ##############################################################
+## set software PATH
+##############################################################
+#local usage, set your own path to the three required tools
+mmseqs="/usr/local/bioinfo/singularity/3.4.2/bin/singularity exec /usr/local/bioinfo/MMseqs2/11-e1a1c/MMseqs2.11-e1a1c.img mmseqs"
+macse="$wd_dir"/macse_v2.03.jar
+seqtk="seqtk"
+#as part of the Singularity container they are directly available
+seqtk="seqtk"
+mmseqs="mmseqs"
+macse="macse_v2.03.jar";
+##############################################################
 ## identify sequences similar to the reference one
 ##############################################################
-java -jar -Xmx800m "$wd_dir"/macse_v2.03.jar -prog translateNT2AA -gc_def $in_geneticCode -seq $in_refSeq -out_AA ref_seq_AA.fasta
+java -jar -Xmx800m $macse -prog translateNT2AA -gc_def $in_geneticCode -seq $in_refSeq -out_AA ref_seq_AA.fasta
 
-mmseqs="/usr/local/bioinfo/singularity/3.4.2/bin/singularity exec /usr/local/bioinfo/MMseqs2/11-e1a1c/MMseqs2.11-e1a1c.img mmseqs"
+
+macse=
+
 cp $in_seqFile __seqs.fasta
 $mmseqs easy-search __seqs.fasta ref_seq_AA.fasta  res_search.tsv TMP --search-type 2 --translation-table 2 --split-memory-limit 70G --format-output "query,qaln,qstart,qend,qcov"
 
 awk '{if($5>0.5 && $4>$3) print $1}' res_search.tsv | sort -u > relevant_dir_id
 awk '{if($5>0.5 && $3>$4) print $1}' res_search.tsv | sort -u > relevant_rev_id
 
-seqtk subseq $in_seqFile relevant_dir_id > relevant_dir.fasta
-seqtk subseq $in_seqFile relevant_rev_id > relevant_rev_tmp.fasta
-seqtk seq -r relevant_rev_tmp.fasta > relevant_rev.fasta
+$seqtk subseq $in_seqFile relevant_dir_id > relevant_dir.fasta
+$seqtk subseq $in_seqFile relevant_rev_id > relevant_rev_tmp.fasta
+$seqtk seq -r relevant_rev_tmp.fasta > relevant_rev.fasta
 sed -i -e 's/^>/>revComp_/' relevant_rev.fasta
 mv relevant_dir.fasta relevant_seq.fasta
 cat relevant_rev.fasta >> relevant_seq.fasta
@@ -80,7 +93,7 @@ $mmseqs easy-cluster relevant_seqAA.fasta --min-seq-id 1 -c 1 --cov-mode 1 Clust
 ## get the centroid of each large sequence cluster
 ##############################################################
 cut -f1 ClusterRes_cluster.tsv | sort | uniq -c | sort -n | awk -v N=${in_minClustSize} '{if($1>N){print $2}}'>representatives_id
-seqtk subseq relevant_seq.fasta representatives_id > representatives.fasta
+$seqtk subseq relevant_seq.fasta representatives_id > representatives.fasta
 
 
 ##############################################################

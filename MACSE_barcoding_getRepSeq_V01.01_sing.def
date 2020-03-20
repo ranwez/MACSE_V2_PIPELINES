@@ -4,7 +4,7 @@ From: ubuntu:16.04
 
 
 %help
-	
+
 
 This container identify a subset of representative sequences homologous to a reference.
 =======================================================================================
@@ -12,7 +12,7 @@ This container identify a subset of representative sequences homologous to a ref
     usage (basic): MACSE_barcoding_getRepSeqs_v01.01.sif --in_refSeq one_reference_seq.fasta --in_seqFile barcoding_sequences_to_align.fasta
     usage (help) : MACSE_barcoding_getRepSeqs_v01.01.sif
 
-    usage (example): MACSE_barcoding_refAlign_v01.01.sif --in_refSeq Homo_sapiens_COI5P.fasta --in_seqFile  Mammalia_BOLD_COI5P.fasta 
+    usage (example): MACSE_barcoding_refAlign_v01.01.sif --in_refSeq Homo_sapiens_COI5P.fasta --in_seqFile  Mammalia_BOLD_COI5P.fasta
 
 Three files are output. The first one contains sequences homologous to the reference one that have been found in the input file (some may have been reversed complemented if necessary). The second file contains a small subset of these sequences that capture most of their diversity. The third one contains the list of sequences that have been reverse complemented.
 
@@ -33,8 +33,8 @@ MACSE V2.03 (sequence translation NT to AA)
     --------------------------------------
 
 MMSEQ2 (sequence clustering)
-    Steinegger M and Soeding J. Clustering huge protein sequence sets in linear time. Nature Communications, doi: 10.1038/s41467-018-04964-5 (2018). 
-   
+    Steinegger M and Soeding J. Clustering huge protein sequence sets in linear time. Nature Communications, doi: 10.1038/s41467-018-04964-5 (2018).
+
     --------------------------------------
 
 SEQTK (reverse complement DNA sequences)
@@ -42,32 +42,32 @@ SEQTK (reverse complement DNA sequences)
 
 
 %post
-    apt-get -y update 
+    apt-get -y update
     apt-get -y install unzip
     apt-get -y install wget
     apt-get -y install gawk
     apt-get -y install openjdk-8-jre
-    
+
     apt-get install -y seqtk
-	wget https://mmseqs.com/latest/mmseqs-linux-sse41.tar.gz; 
-    tar xvfz mmseqs-linux-sse41.tar.gz; 
+	wget https://mmseqs.com/latest/mmseqs-linux-sse41.tar.gz;
+    tar xvfz mmseqs-linux-sse41.tar.gz;
 
     wget https://bioweb.supagro.inra.fr/macse/releases/macse_v2.03.jar
-    
+
     wget https://github.com/ranwez/macse_barcode/blob/master/S_getRepresentativeSeqs.sh
     wget https://github.com/ranwez/macse_barcode/blob/master/S_utilIO.sh
 
     chmod +x S_*.sh
-    
+
     rm -rf /var/lib/apt/lists/*
-    
-    
+
+
 
 
 %environment
     export PATH=/mmseqs/bin/:$PATH
     export LC_ALL=C
-    
+
 
 %runscript
 	exec bash /S_getRepresentativeSeqs.sh "$@"
@@ -76,6 +76,6 @@ SEQTK (reverse complement DNA sequences)
 %labels
     Author Vincent Ranwez
 
-#sudo singularity  build MACSE_BARCODE_V01.01.sif MACSE_BARCODE_V01.01_sing.def
-#singularity run OMM_MACSE_V10.01.sif
-#singularity run-help OMM_MACSE_V10.01.sif
+#singularity  build MACSE_barcoding_getRepSeq_V01.01.sif MACSE_barcoding_getRepSeq_V01.01_sing.def
+#singularity run MACSE_barcoding_getRepSeq_V01.01.sif
+#singularity run-help MACSE_barcoding_getRepSeq_V01.01.sif
