@@ -1,15 +1,15 @@
 #! usr/bin/env nextflow
 
-params.refAlign="refAlign.fasta"
-params.seqToAlign="allSeq.fasta"
-params.javaMem="600m"
+params.refAlign="Toto_refAlign.fasta"
+params.seqToAlign="Toto_allSeq.fasta"
+params.javaMem="2000m"
 params.resDIR="MACSE_BARCODE_RESULTS"
 params.gc="2"
 
 
 Channel
     .fromPath( params.seqToAlign )
-    .splitFasta( by: 10, file:true)
+    .splitFasta( by: 50, file:true)
     .set {fasta_split }
 
 process enrichNoIns {
@@ -19,24 +19,36 @@ process enrichNoIns {
     output:
       file "${seqF.baseName}_NT.aln" into splitEnrichAln
       file "${seqF.baseName}_stats.csv" into splitEnrichStat
+      file "${seqF.baseName}_trim_stat.csv" into splitTrimStat
       //stdout result
 
       """
       . /etc/profile.d/modules.sh
       module load system/java/jre8
+
+      java -XX:MaxMetaspaceSize=${params.javaMem} -Xms250m -Xmx${params.javaMem} \
+          -jar /homedir/ranwez/MACSE_BARCODE/macse_v2.03.jar -prog trimSequences \
+          -align $refAlignFile -gc_def ${params.gc} -seq $refAlignFile -seq_lr $seqF \
+          -fs_lr 10 -stop_lr 10 -gap_ext_term 0.1 -gap_op_term 0.7\
+          -out_NT_trimmed ${seqF.baseName}_NT_trimed.fasta \
+          -out_NT_annotated ${seqF.baseName}_NT_masked.fasta \
+          -out_trim_stat ${seqF.baseName}_trim_stat.csv
+
       java -XX:MaxMetaspaceSize=${params.javaMem} -Xms250m -Xmx${params.javaMem} \
           -jar /homedir/ranwez/MACSE_BARCODE/macse_v2.03.jar -prog enrichAlignment \
-          -align $refAlignFile -gc_def ${params.gc} -seq $refAlignFile -seq_lr $seqF \
-          -fixed_alignment_ON -new_seq_alterable_ON -fs_lr 10 -stop_lr 10 \
+          -align $refAlignFile -gc_def ${params.gc} -seq $refAlignFile -seq_lr ${seqF.baseName}_NT_trimed.fasta \
+          -fs_lr 10 -stop_lr 10 -gap_ext_term 0.1 -gap_op_term 0.7\
+          -fixed_alignment_ON -new_seq_alterable_ON \
           -maxFS_inSeq 2 -maxINS_inSeq 0 -maxSTOP_inSeq 1 \
           -fixed_alignment_ON -output_only_added_seq_ON\
           -out_NT ${seqF.baseName}_NT.aln -out_tested_seq_info ${seqF.baseName}_stats.csv
+
+
       """
 }
 
-process mergeNoIns{
-   publishDir "$workflow.launchDir/$params.resDIR", mode: 'copy', overwrite: false
-   input:
+process mergeNoInsAln{
+  input:
      file alignList from splitEnrichAln.collect()
 
     """
@@ -49,7 +61,7 @@ process mergeNoIns{
     done
 
 
-    #cp alignAll_noIns.aln /homedir/ranwez/MACSE_BARCODE/TEST_MMSEQ2/
+    cp alignAll_noIns.aln "$workflow.launchDir/$params.resDIR"
     """
 
 }
@@ -63,11 +75,20 @@ process mergeNoInsStat{
     """
 }
 
+process mergeTrimStat{
+  input:
+    file allTrimStatFile from splitTrimStat.collectFile(storeDir:"$workflow.launchDir/$params.resDIR", name:'alignAll_preTrimingStat.csv', keepHeader:true)
+  output:
+    file allTrimStatFile
+    """
+    """
+}
+
 //splitEnrichStat
 //  .collectFile(storeDir:'/homedir/ranwez/MACSE_BARCODE/TEST_MMSEQ2/', name:'alignAll_noIns.csv', keepHeader:true)
 
 
 //result.view { it.trim() }
 // module load bioinfo/nextflow/19.07.0.5106
-// nextflow S_macse_barcode.nf --refAlign REF_ALIGN/refAlign_final_mask_align_NT.aln --seqToAlign DATA/Mammalia_BOLD_100seq_COI-5P_2020.fasta
-// nextflow S_macse_barcode.nf --refAlign REF_ALIGN/refAlign_final_mask_align_NT.aln --seqToAlign DATA/Mammalia_BOLD_100seq_COI-5P_2020.fasta
+// nextflow S_macse_barcode.nf --refAlign ../REF_ALIGN_MAMMAL_COI5P/refAlign_mammal_COI5P_final_mask_align_NT.aln --seqToAlign ../DATA/Mammalia_BOLD_100seq_COI-5P_2020.fasta
+// nextflow S_macse_barcode.nf --refAlign ../REF_ALIGN_MAMMAL_COI5P/refAlign_mammal_COI5P_final_mask_align_NT.aln --seqToAlign ../homologous_seq_NT.fasta

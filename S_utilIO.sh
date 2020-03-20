@@ -2,7 +2,7 @@
 #set -euo pipefail
 
 function get_in_file_param(){
-  local file=$(readlink -f "$2")
+  local file; file=$(readlink -f "$2")
   local has_problem=0
   if [[ ! -f $file ]]; then
     printf "Problem with option $1, File $file does not exist" >&2
@@ -13,13 +13,14 @@ function get_in_file_param(){
 }
 
 function get_out_file_param(){
-  local file=$(readlink -f "$2")
+  local file; file=$(readlink -f "$2")
   local has_problem=0
   if [[ -f $file ]]; then
     printf "Problem with option $1, File $file already  exist" >&2
     has_problem=1
+  else
+    (touch "$file" && rm "$file") || has_problem=1
   fi
-  {touch "$file"; rm "$file"} || has_problem=1
   echo $file
   return $has_problem
 }
@@ -34,6 +35,7 @@ function get_out_dir_param(){
 
 
 function get_in_int_param(){
+  local has_problem=0
   local re='^[0-9]+$'
   if ! [[ $2 =~ $re ]]; then
     printf "Problem with option $1,  $2 is not an integer" >&2
@@ -46,7 +48,7 @@ function get_in_int_param(){
 
 # $1 parameter allows to specify a prefix to identify your tmp folders
 function get_tmp_dir(){
-  local tmp_dir=$(mktemp -d -t "$1"_$(date +%Y-%m-%d-%H-%M-%S)-XXXXXXXXXXXX)
+  local tmp_dir; tmp_dir=$(mktemp -d -t "$1"_$(date +%Y-%m-%d-%H-%M-%S)-XXXXXXXXXXXX)
   echo $tmp_dir
 }
 
