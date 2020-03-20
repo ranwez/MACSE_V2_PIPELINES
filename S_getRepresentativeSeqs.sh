@@ -66,7 +66,7 @@ macse="macse_v2.03.jar";
 ## identify sequences similar to the reference one
 ##############################################################
 $seqtk
-$mmseqs2
+$mmseqss
 $macse
 java -jar -Xmx800m $macse -prog translateNT2AA -gc_def $in_geneticCode -seq $in_refSeq -out_AA ref_seq_AA.fasta
 
