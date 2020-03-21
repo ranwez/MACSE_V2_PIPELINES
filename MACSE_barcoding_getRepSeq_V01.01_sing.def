@@ -61,11 +61,11 @@ SEQTK (reverse complement DNA sequences)
 
     rm -rf /var/lib/apt/lists/*
 
-		# Folders neeeded fot the cirad Cluster
+		# Folders neeeded for the cirad Cluster
 		   mkdir /work
 		   mkdir /homedir
 		   mkdir /projects
-			 mkdir /gs7k1/home/
+			 mkdir -p /gs7k1/home/
 		   mkdir -p /usr1/compte_mess
 
 
