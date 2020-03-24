@@ -27,7 +27,7 @@ process enrichNoIns {
       module load system/java/jre8
 
       java -XX:MaxMetaspaceSize=${params.javaMem} -Xms250m -Xmx${params.javaMem} \
-          -jar /homedir/ranwez/MACSE_BARCODE/macse_v2.03.jar -prog trimSequences \
+          -jar "$workflow.launchDir"/macse_v2.03.jar -prog trimSequences \
           -align $refAlignFile -gc_def ${params.gc} -seq $refAlignFile -seq_lr $seqF \
           -fs_lr 10 -stop_lr 10 -gap_ext_term 0.1 -gap_op_term 0.7\
           -out_NT_trimmed ${seqF.baseName}_NT_trimed.fasta \
@@ -35,7 +35,7 @@ process enrichNoIns {
           -out_trim_stat ${seqF.baseName}_trim_stat.csv
 
       java -XX:MaxMetaspaceSize=${params.javaMem} -Xms250m -Xmx${params.javaMem} \
-          -jar /homedir/ranwez/MACSE_BARCODE/macse_v2.03.jar -prog enrichAlignment \
+          -jar "$workflow.launchDir"/macse_v2.03.jar -prog enrichAlignment \
           -align $refAlignFile -gc_def ${params.gc} -seq $refAlignFile -seq_lr ${seqF.baseName}_NT_trimed.fasta \
           -fs_lr 10 -stop_lr 10 -gap_ext_term 0.1 -gap_op_term 0.7\
           -fixed_alignment_ON -new_seq_alterable_ON \

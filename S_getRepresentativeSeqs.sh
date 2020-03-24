@@ -13,24 +13,25 @@ source "$script_dir"/S_utilIO.sh
 
 
 function quit_pb_option() {
-    printf "\nOptions: --in_refSeq --in_seqFile [--in_geneticCode] [--out_repSeq] [--out_homologSeq] [--out_listRevComp] [--in_minClustSize] [--debug]\n"
-    printf "\n usage example: --in_refSeq DATA/Hsapiens_COI5P.fasta --in_seqFile DATA/Mammalia_BOLD_141145seq_2020.fasta --in_geneticCode 2 [--out_refAlign] [--out_homologSeq] [--debug]\n"
+    printf "\nOptions: --in_refSeq --in_seqFile [--in_geneticCode] [--out_repSeq] [--out_homologSeq] [--out_listRevComp] [--in_minClustSize] [--in_maxRepresentativeSeqs] [--debug]\n"
+    printf "\n usage example: --in_refSeq DATA/Hsapiens_COI5P.fasta --in_seqFile DATA/Mammalia_BOLD_141145seq_2020.fasta --in_geneticCode 2 \n"
     exit 1
 }
 
 #handle parameters
-debug=0; in_geneticCode=2; in_minClustSize=100;
+debug=0; in_geneticCode=2; in_minClustSize=20; in_maxRepresentativeSeqs=100;
 
 while (( $# > 0 )); do
     case "$1" in
-	     --in_refSeq)         in_refSeq=$(get_in_file_param "$1" "$2")          || quit_pb_option ; shift 2;;
-	     --in_seqFile)        in_seqFile=$(get_in_file_param "$1" "$2")         || quit_pb_option ; shift 2;;
-	     --in_geneticCode)    in_geneticCode=$(get_in_int_param "$1" "$2")      || quit_pb_option ; shift 2;;
-       --in_minClustSize)   in_minClustSize=$(get_in_int_param "$1" "$2")     || quit_pb_option ; shift 2;;
-       --out_repSeq)        out_repSeq=$(get_out_file_param "$1" "$2")        || quit_pb_option ; shift 2;;
-       --out_homologSeq)    out_homologSeq=$(get_out_file_param "$1" "$2")    || quit_pb_option ; shift 2;;
-       --out_listRevComp)   out_listRevComp=$(get_out_file_param "$1" "$2")   || quit_pb_option ; shift 2;;
-       --debug)             debug=1                                                             ; shift 1;;
+	     --in_refSeq)                  in_refSeq=$(get_in_file_param "$1" "$2")                   || quit_pb_option ; shift 2;;
+	     --in_seqFile)                 in_seqFile=$(get_in_file_param "$1" "$2")                  || quit_pb_option ; shift 2;;
+	     --in_geneticCode)             in_geneticCode=$(get_in_int_param "$1" "$2")               || quit_pb_option ; shift 2;;
+       --in_minClustSize)            in_minClustSize=$(get_in_int_param "$1" "$2")              || quit_pb_option ; shift 2;;
+       --in_maxRepresentativeSeqs)   in_maxRepresentativeSeqs=$(get_in_int_param "$1" "$2")     || quit_pb_option ; shift 2;;
+       --out_repSeq)                 out_repSeq=$(get_out_file_param "$1" "$2")                 || quit_pb_option ; shift 2;;
+       --out_homologSeq)             out_homologSeq=$(get_out_file_param "$1" "$2")             || quit_pb_option ; shift 2;;
+       --out_listRevComp)            out_listRevComp=$(get_out_file_param "$1" "$2")            || quit_pb_option ; shift 2;;
+       --debug)                      debug=1                                                                      ; shift 1;;
 	      *) printf "Option $1 is unknown please ckeck your command line"; quit_pb_option;;
     esac
 done
@@ -54,7 +55,7 @@ cd $tmp_dir
 ##############################################################
 ## set software PATH
 ##############################################################
-#local usage, set your own path to the three required tools
+#local usage, set your own path toward the three required tools
 mmseqs="/usr/local/bioinfo/singularity/3.4.2/bin/singularity exec /usr/local/bioinfo/MMseqs2/11-e1a1c/MMseqs2.11-e1a1c.img mmseqs"
 macse="$wd_dir"/macse_v2.03.jar
 seqtk="seqtk"
@@ -65,13 +66,7 @@ macse=$SING_MACSE;
 ##############################################################
 ## identify sequences similar to the reference one
 ##############################################################
-$seqtk
-$mmseqs
-$macse
 java -jar -Xmx800m $macse -prog translateNT2AA -gc_def $in_geneticCode -seq $in_refSeq -out_AA ref_seq_AA.fasta
-
-
-macse=
 
 cp $in_seqFile __seqs.fasta
 $mmseqs easy-search __seqs.fasta ref_seq_AA.fasta  res_search.tsv TMP --search-type 2 --translation-table $in_geneticCode --split-memory-limit 70G --format-output "query,qaln,qstart,qend,qcov"
@@ -95,7 +90,7 @@ $mmseqs easy-cluster relevant_seqAA.fasta --min-seq-id 1 -c 1 --cov-mode 1 Clust
 ##############################################################
 ## get the centroid of each large sequence cluster
 ##############################################################
-cut -f1 ClusterRes_cluster.tsv | sort | uniq -c | sort -n | awk -v N=${in_minClustSize} '{if($1>N){print $2}}'>representatives_id
+cut -f1 ClusterRes_cluster.tsv | sort | uniq -c | sort -n | awk -v N=${in_minClustSize} '{if($1>N){print $2}}' | head $in_maxRepresentativeSeqs >representatives_id
 $seqtk subseq relevant_seq.fasta representatives_id > representatives.fasta
 
 
