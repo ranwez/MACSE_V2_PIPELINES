@@ -5,7 +5,7 @@ function get_in_file_param(){
   local file; file=$(readlink -f "$2")
   local has_problem=0
   if [[ ! -f $file ]]; then
-    printf "Problem with option $1, File $file does not exist" >&2
+    printf "Problem with option $1, File $2 does not exist" >&2
     has_problem=1
   fi
   echo $file
@@ -16,7 +16,7 @@ function get_out_file_param(){
   local file; file=$(readlink -f "$2")
   local has_problem=0
   if [[ -f $file ]]; then
-    printf "Problem with option $1, File $file already  exist" >&2
+    printf "Problem with option $1, File $2 already  exist" >&2
     has_problem=1
   else
     (touch "$file" && rm "$file") || has_problem=1
