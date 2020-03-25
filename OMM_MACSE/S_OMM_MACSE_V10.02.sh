@@ -43,8 +43,8 @@ while (( $# > 0 )); do
 	     --in_geneticCode)             in_geneticCode=$(get_in_int_param "$1" "$2")             || quit_pb_option ; GC_OPT=" -gc_def $in_geneticCode"; shift 2;;
        --java_mem)                   JAVA_MEM="$2"                                            || quit_pb_option ; shift 2;;
        --out_dir)                    OUT_DIR=$(get_out_file_param "$1" "$2")                  || quit_pb_option ; shift 2;;
-       --out_file_prefix)            OUT_FILE_PREFIX="$2";                                    || quit_pb_option ; shift 2;;
-       --min_percent_NT_at_ends)     MIN_PERCENT_NT_AT_ENDS="$2";                             || quit_pb_option ; shift 2;;
+       --out_file_prefix)            OUT_FILE_PREFIX="$2"                                     || quit_pb_option ; shift 2;;
+       --min_percent_NT_at_ends)     MIN_PERCENT_NT_AT_ENDS="$2"                              || quit_pb_option ; shift 2;;
        --out_detail_dir)             OUT_DETAIL_DIR=$(get_out_file_param "$1" "$2")           || quit_pb_option ; SAVE_DETAILS=1; shift 2;;
        --no_prefiltering)            PRE_FILTERING=0;                                                           ; shift 1;;
        --no_FS_detection)            FS_DETECTION=0;                                                            ; shift 1;;
