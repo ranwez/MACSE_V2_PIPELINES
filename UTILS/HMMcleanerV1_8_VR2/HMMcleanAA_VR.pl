@@ -10,7 +10,9 @@ my $abs_path = abs_path($0);
 $abs_path =~ s/\/[^\/]*$/\//g;
 
 my $changeID = 0;
-my $delchar = " ";
+# VR modif: spaces are ignored by most alignment viewers so that sequences seems to be unaligned with this default value => change to -
+#my $delchar = " ";
+my $delchar = "-";
 my $hmmerpath = "";
 
 
@@ -46,15 +48,15 @@ while((@ARGV > 1) and ($ARGV[0]=~ m/^-/)){
 	shift;
 }
 
- 
+
 # arguments
 if ((@ARGV) != 2){
 	die "\n
 Check the README, format should be:\n./HMMcleanAA.pl <fastafile> <threshold>\n\n
 This is a modified version of HMMCleaner V1_8 developped by Raphael Poujol. Vincent Ranwez modified the original perl script so that:
 \t 1. sequences and sequence names are unchanged even when they contain unusual characters
-\t 2. all output files are saved in the current directory 
-HMMCleaner has since been re-written by Arnaud Di Franco and a more recent release of HMMCleaner is available here: https://metacpan.org/pod/HmmCleaner.pl. If you find this useful please cite: 
+\t 2. all output files are saved in the current directory
+HMMCleaner has since been re-written by Arnaud Di Franco and a more recent release of HMMCleaner is available here: https://metacpan.org/pod/HmmCleaner.pl. If you find this useful please cite:
 \t Di Franco, Arnaud, et al. Evaluating the usefulness of alignment filtering methods to reduce the impact of errors on evolutionary inferences. BMC Evolutionary Biology, vol. 19, no. 1, 2019. Gale Academic Onefile, Accessed 13 Oct. 2019.
 	";
 }
@@ -79,7 +81,7 @@ if ($cost1 <= -$threshold){
 open (INFILE,$fastafile) or die "fichier $fastafile inexistant\n";
 my @FASTAFILE = <INFILE>;
 while($FASTAFILE[0] =~ m/^\#/){
-	shift(@FASTAFILE); 
+	shift(@FASTAFILE);
 }
 
 #read the file
@@ -118,7 +120,7 @@ for(my $i=0; $i<=$#FASTAFILE;$i++){
 	}
 	else{
 		# load the current sequence
-		#VR $FASTAFILE[$i] =~ s/[\*X\?\-\ ]/-/g; 
+		#VR $FASTAFILE[$i] =~ s/[\*X\?\-\ ]/-/g;
     $FASTAFILE[$i] =~ s/[\ ]/-/g;
     $FASTAFILE[$i] =~ s/[\*X\?]/X/g;
     # end VR
@@ -191,7 +193,7 @@ for(my $i=0; $i<=$taxanumber;$i++){
 	print STOC $cooltaxaname[$i].$fullseq[$i]."\n";
 }
 print STOC "\/\/\n";
-close(STOC); 
+close(STOC);
 
 
 
@@ -269,18 +271,18 @@ sub doit{
 	my $currentseq = $fullseq[$currenttaxa];
 	#VR $currentseq =~ s/[\*X\?\-\ ]//g;
    $currentseq =~ s/[\-\ ]//g;
-	
+
   my $seqlength = length($currentseq);
 
-	# write a stockolm file with the sequence	
+	# write a stockolm file with the sequence
 	open(STOC1,">${tempfile}$currenttaxa.stoc1") or die ("Error opening ${tempfile}$currenttaxa.stoc1");
 	print STOC1 "# STOCKHOLM 1.0\n$cooltaxaname[$currenttaxa]$currentseq\n\/\/\n";
-	close(STOC1); 
+	close(STOC1);
 
 	# use the model to map the sequence on the alignments
 	system("${hmmerpath}hmmsearch --notextw ${tempfile}.hmm ${tempfile}$currenttaxa.stoc1 	> ${tempfile}$currenttaxa.res 2>> ${tempfile}.poub");
 	if( -z "${tempfile}$currenttaxa.res" ) {print "user interuption or HMMER error with hmmsearch\n";exit;}
-	
+
 
 
 	# depending on the option number, the line with the number of domain will change
@@ -298,7 +300,7 @@ sub doit{
 	my @starthmm;
 	my @endhmm;
 
-	#number of domain detected, 
+	#number of domain detected,
 	$RESULT[15] =~ s/ +/ /g;
 	$RESULT[15] =~ s/^ //g;
 	my $NBdomain = (split(/ /, $RESULT[$l]))[7];
@@ -366,7 +368,7 @@ sub doit{
 		}
 	}
 	$score .= " " x ($seqlength - length($score));
-	
+
 
 	# this function return a list of shifts between good and bad positions
 	my @shifts = &findshiftusingscore($score, $threshold);
@@ -402,20 +404,20 @@ sub doit{
 
 	my $result = &erasezone($fullseq[$currenttaxa], @shifts);
 
-	#VR why modifying the original name ? 
+	#VR why modifying the original name ?
 	#$taxaname[$currenttaxa] =~ s/_/ /;
 	print FASTA ">".$taxaname[$currenttaxa]."\n".$result."\n";
 
 	print LOG $taxaname[$currenttaxa]."\n";
 	for(my $i = 0; $i < $#shifts; $i+=2){
 		print LOG "\t".(1+$shifts[$i])."-".$shifts[$i+1]."\n";
-	}	
+	}
 
 	#my $resulthtml = &htmlzone($fullseq[$currenttaxa], @shifts);
 	#print HTML $cooltaxaname[$currenttaxa].$resulthtml."\n";
 
 	print $fastafile."\t".$taxaname[$currenttaxa]."\t".$erased."\n";
-	
+
 	return $result;
 }
 
@@ -437,7 +439,7 @@ sub overlap{
 		else{
 			$ret-=$a-$c;
 		}
-	}	
+	}
 	if( ($a < $c) and ($d < $b) ){
 		$ret = $d-$c;
 	}
@@ -453,7 +455,7 @@ sub max{
 	}
 	return $a;
 }
-	
+
 
 sub shiftatab{
 	my $reftab = shift;
@@ -507,7 +509,7 @@ sub erasezoneVR{
     print "$prev \t $shifts[$i] \t $shifts[$i+1] \t $result \n";
     $prev = $shifts[$i+1];
 	}
- 
+
  	$result .= substr($seq, $prev, length($seq) -$prev);
 	return $result;
 }
@@ -536,8 +538,8 @@ sub htmlzone{
 				$result .= "\<span class=bgy\>".$s."\<\/span\>";
 			}
 	}
-	$result .= substr($seq, $a1, length($seq)-$a1);	
-	return $result;	
+	$result .= substr($seq, $a1, length($seq)-$a1);
+	return $result;
 }
 
 sub findshiftusingscore{
@@ -618,7 +620,7 @@ sub reversestring{
 			else{
 				$result .= "<\/span>";
 				$pos-=13;
-			}				
+			}
 		}
 		else{
 			$result .= substr($seq, $pos, 1);
@@ -630,7 +632,7 @@ sub reversestring{
 
 
 # useless function taking a sequence, a character and the lengths of gap and sequence and introducing the gaps in the sequence
-# table must have the sum of each impair 
+# table must have the sum of each impair
 sub shiftaseq{
 	my $seq = shift;
 	my $char = shift;
@@ -651,4 +653,3 @@ sub shiftaseq{
 system("rm -f ${tempfile}*");
 
 exit;
-

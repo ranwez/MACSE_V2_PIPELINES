@@ -8,7 +8,9 @@ my $abs_path = abs_path($0);
 $abs_path =~ s/\/[^\/]*$/\//g;
 
 my $changeID = 0;
-my $delchar = " ";
+# VR modif: spaces are ignored by most alignment viewers so that sequences seems to be unaligned with this default value => change to -
+#my $delchar = " ";
+my $delchar = "-";
 my $hmmerpath = "";
 
 
@@ -44,7 +46,7 @@ while((@ARGV > 1) and ($ARGV[0]=~ m/^-/)){
 	shift;
 }
 
- 
+
 # arguments
 if ((@ARGV) != 2){
 	die "\nCheck the README, format should be:\n./HMMcleanAA.pl <fastafile> <threshold>\n\n";
@@ -70,7 +72,7 @@ if ($cost1 <= -$threshold){
 open (INFILE,$fastafile) or die "fichier $fastafile inexistant\n";
 my @FASTAFILE = <INFILE>;
 while($FASTAFILE[0] =~ m/^\#/){
-	shift(@FASTAFILE); 
+	shift(@FASTAFILE);
 }
 
 #read the file
@@ -175,7 +177,7 @@ for(my $i=0; $i<=$taxanumber;$i++){
 	print STOC $cooltaxaname[$i].$fullseq[$i]."\n";
 }
 print STOC "\/\/\n";
-close(STOC); 
+close(STOC);
 
 
 
@@ -242,7 +244,7 @@ sub doit{
 #	if($i != $currenttaxa){print STOCHMM $cooltaxaname[$i].$fullseq[$i]."\n";}
 #}
 #print STOCHMM "\/\/\n";
-#close(STOCHMM); 
+#close(STOCHMM);
 
 
 
@@ -256,15 +258,15 @@ sub doit{
 	$currentseq =~ s/[\*X\?\-\ ]//g;
 	my $seqlength = length($currentseq);
 
-	# write a stockolm file with the sequence	
+	# write a stockolm file with the sequence
 	open(STOC1,">${tempfile}$currenttaxa.stoc1") or die ("Error opening ${tempfile}$currenttaxa.stoc1");
 	print STOC1 "# STOCKHOLM 1.0\n$cooltaxaname[$currenttaxa]$currentseq\n\/\/\n";
-	close(STOC1); 
+	close(STOC1);
 
 	# use the model to map the sequence on the alignments
 	system("${hmmerpath}hmmsearch --notextw ${tempfile}.hmm ${tempfile}$currenttaxa.stoc1 	> ${tempfile}$currenttaxa.res 2>> ${tempfile}.poub");
 	if( -z "${tempfile}$currenttaxa.res" ) {print "user interuption or HMMER error with hmmsearch\n";exit;}
-	
+
 
 
 	# depending on the option number, the line with the number of domain will change
@@ -279,7 +281,7 @@ sub doit{
 	my @starthmm;
 	my @endhmm;
 
-	#number of domain detected, 
+	#number of domain detected,
 	$RESULT[15] =~ s/ +/ /g;
 	$RESULT[15] =~ s/^ //g;
 	my $NBdomain = (split(/ /, $RESULT[$l]))[7];
@@ -333,7 +335,7 @@ sub doit{
 			$tempseq = substr($tempseq, 0, $pos).substr($tempseq, $pos+1, $length2);
 			$score[$d] = substr($score[$d], 0, $pos).substr($score[$d], $pos+1, $length2);
 			$pos = index($tempseq, '-');
-		}		
+		}
 		$l+=6;
 	}
 
@@ -389,13 +391,13 @@ sub doit{
 	print LOG $taxaname[$currenttaxa]."\n";
 	for(my $i = 0; $i < $#shifts; $i+=2){
 		print LOG "\t".(1+$shifts[$i])."-".$shifts[$i+1]."\n";
-	}	
+	}
 
 	#my $resulthtml = &htmlzone($fullseq[$currenttaxa], @shifts);
 	#print HTML $cooltaxaname[$currenttaxa].$resulthtml."\n";
 
 	print $fastafile."\t".$taxaname[$currenttaxa]."\t".$erased."\n";
-	
+
 	return $result;
 }
 
@@ -417,7 +419,7 @@ sub overlap{
 		else{
 			$ret-=$a-$c;
 		}
-	}	
+	}
 	if( ($a < $c) and ($d < $b) ){
 		$ret = $d-$c;
 	}
@@ -496,8 +498,8 @@ sub htmlzone{
 				$result .= "\<span class=bgy\>".$s."\<\/span\>";
 			}
 	}
-	$result .= substr($seq, $a1, length($seq)-$a1);	
-	return $result;	
+	$result .= substr($seq, $a1, length($seq)-$a1);
+	return $result;
 }
 
 sub findshiftusingscore{
@@ -579,7 +581,7 @@ sub reversestring{
 			else{
 				$result .= "<\/span>";
 				$pos-=13;
-			}				
+			}
 		}
 		else{
 			$result .= substr($seq, $pos, 1);
@@ -591,7 +593,7 @@ sub reversestring{
 
 
 # useless function taking a sequence, a character and the lengths of gap and sequence and introducing the gaps in the sequence
-# table must have the sum of each impair 
+# table must have the sum of each impair
 sub shiftaseq{
 	my $seq = shift;
 	my $char = shift;
@@ -612,4 +614,3 @@ sub shiftaseq{
 system("rm -f ${tempfile}*");
 
 exit;
-
