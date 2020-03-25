@@ -89,7 +89,7 @@ HMMCleaner V1_8_VR2 (default)
 
        chmod +x /UTILS/LGS_Fasta/S_*.sh
        chmod +x /OMM_MACSE/S_*.sh
-       chmod +x /prank/bin/*
+       chmod -R 755 /prank
 
 %environment
     export LC_ALL=C
