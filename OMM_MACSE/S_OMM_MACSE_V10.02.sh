@@ -3,7 +3,7 @@ set -Euo pipefail
 
 # author : V. Ranwez
 
-#source $HOME/LG_conf.sh
+
 ######################################
 # SCRIPT PARAMETERS
 SCRIPT_NAME=$(basename "$0")
@@ -20,7 +20,8 @@ function quit_pb_option() {
 script_name=$(basename "$0")
 wd_dir="$PWD"
 script_dir=$(dirname $(readlink -f "$0"))
-source "$script_dir"/S_utilIO.sh
+LG_UTILS=${LG_UTILS_PATH}
+source "$LG_UTILS"/S_utilIO.sh
 
 #handle parameters
 
@@ -77,7 +78,6 @@ printf "============================ PROCESSING $PREFIX\n"
 mafft="${LG_MAFFT} --quiet $ALIGNER_EXTRA_OPTION"
 muscle="${LG_MUSCLE} $ALIGNER_EXTRA_OPTION"
 hmmcleaner="perl ${LG_HMMCLEANER}"
-LG_HOME=${LG_HOME_PATH}
 macse="java -jar -Xmx${JAVA_MEM} ${LG_MACSE}"
 
 ######################################
@@ -103,7 +103,7 @@ else
     echo "seqName;initialSeqLength;nbKeep;nbTrim;nbInformativeTrim;percentHomologExcludingExtremities;percentHomologIncludingExtremities;keptSequences" >__${PREFIX}_homol_fiter.csv
     for s in $(grep ">" __${PREFIX}_homol_tmp_NT.fasta | cut -f1 -d">"); do
           echo "${s};NA;NA;NA;NA;NA;NA;NA;true" >>__${PREFIX}_homol_fiter.csv
-          $LG_HOME/LGS_Fasta/S_unmask_seq.sh --in_seq_file __${PREFIX}_homol_tmp_NT.fasta --out_seq_file __${PREFIX}_NonHomolFilter_NT_mask_detail.fasta
+          $LG_UTILS/LGS_Fasta/S_unmask_seq.sh --in_seq_file __${PREFIX}_homol_tmp_NT.fasta --out_seq_file __${PREFIX}_NonHomolFilter_NT_mask_detail.fasta
     done
 
 fi
@@ -194,14 +194,14 @@ if(( ${PRE_FILTERING} > 0 || ${FILTERING} > 0)); then
 fi
 
 if(( ${PRE_FILTERING} > 0 && ${FILTERING} == 0 )); then
-    ${LG_HOME}/LGS_Fasta/S_mask_removed_seq.sh --in_seq_file __${PREFIX}_NonHomolFilter_NT_mask_detail.fasta --in_keep_seq_info __${PREFIX}_homol_fiter.csv --out_seq_file __${PREFIX}_NonHomolFilter_RmSeq_NT_mask_detail.fasta --col_keep_info 8
+    ${LG_UTILS}/LGS_Fasta/S_mask_removed_seq.sh --in_seq_file __${PREFIX}_NonHomolFilter_NT_mask_detail.fasta --in_keep_seq_info __${PREFIX}_homol_fiter.csv --out_seq_file __${PREFIX}_NonHomolFilter_RmSeq_NT_mask_detail.fasta --col_keep_info 8
     cp __${PREFIX}_homol_fiter.csv $OUT_DIR/${OUT_FILE_PREFIX}_maskHomolog_stat.csv
     cp __${PREFIX}_homol_fiter.csv $OUT_DIR/${OUT_FILE_PREFIX}_maskFull_stat.csv
     cp __${PREFIX}_NonHomolFilter_RmSeq_NT_mask_detail.fasta $OUT_DIR/${OUT_FILE_PREFIX}_maskFull_detail.fasta
 fi
 
 if(( ${FILTERING} > 0 )); then
-    $LG_HOME/LGS_Fasta/S_mask_removed_seq.sh --in_seq_file __${PREFIX}_NonHomolFilter_NT_mask_detail.fasta --in_keep_seq_info __${PREFIX}_homol_fiter.csv --out_seq_file __${PREFIX}_NonHomolFilter_RmSeq_NT_mask_detail.fasta --col_keep_info 8
+    $LG_UTILS/LGS_Fasta/S_mask_removed_seq.sh --in_seq_file __${PREFIX}_NonHomolFilter_NT_mask_detail.fasta --in_keep_seq_info __${PREFIX}_homol_fiter.csv --out_seq_file __${PREFIX}_NonHomolFilter_RmSeq_NT_mask_detail.fasta --col_keep_info 8
     $macse -prog mergeTwoMasks -mask_file1 __${PREFIX}_NonHomolFilter_RmSeq_NT_mask_detail.fasta -mask_file2 __${PREFIX}_hmmCleaner_mask2_detail.aln -out_mask_detail __${PREFIX}_maskFull_detail.fasta -out_trim_info __${PREFIX}_maskFull_stat.csv
     cp __${PREFIX}_homol_fiter.csv $OUT_DIR/${OUT_FILE_PREFIX}_maskHomolog_stat.csv
     cp __${PREFIX}_maskFull_stat.csv $OUT_DIR/${OUT_FILE_PREFIX}_maskFull_stat.csv
