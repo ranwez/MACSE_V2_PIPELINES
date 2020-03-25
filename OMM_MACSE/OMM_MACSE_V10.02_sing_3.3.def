@@ -67,7 +67,7 @@ HMMCleaner V1_8_VR2 (default)
   ## end of subversion dependencies
 
   ## install prank
-  sudo apt-get install libc6
+  apt-get install libc6
   wget http://wasabiapp.org/download/prank/prank.linux64.170427.tgz
   tar -zxvf prank.linux64.170427.tgz
   ##
