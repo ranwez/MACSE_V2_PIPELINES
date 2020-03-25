@@ -148,7 +148,7 @@ case $ALIGN_SOFT in
     ${muscle} -in __${PREFIX}_homol_AA.fasta -out __${PREFIX}_homol_AA.aln
     ;;
   "PRANK" )
-    ${prank} -d=__${PREFIX}_homol_AA.fasta -o=__${PREFIX}_homol_AA.aln
+    ${prank} -d=__${PREFIX}_homol_AA.fasta -o=__${PREFIX}_homol_AA.aln; mv __${PREFIX}_homol_AA.aln.best.fas __${PREFIX}_homol_AA.aln;
     ;;
 esac
 
