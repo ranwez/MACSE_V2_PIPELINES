@@ -23,12 +23,12 @@ If you use this pipeline please cite:
 =====================================
 
 OrthoMam v10 (the paper describing this pipeline)
-    Celine Scornavacca, Khalid Belkhir, Jimmy Lopez, Rémy Dernat, Frédéric Delsuc, Emmanuel J P Douzery, Vincent Ranwez, OrthoMaM v10: Scaling-Up Orthologous Coding Sequence and Exon Alignments with More than One Hundred Mammalian Genomes, Molecular Biology and Evolution, Volume 36, Issue 4, April 2019, Pages 861–862, https://doi.org/10.1093/molbev/msz015
+    Celine Scornavacca, Khalid Belkhir, Jimmy Lopez, RÃ©my Dernat, FrÃ©dÃ©ric Delsuc, Emmanuel J P Douzery, Vincent Ranwez, OrthoMaM v10: Scaling-Up Orthologous Coding Sequence and Exon Alignments with More than One Hundred Mammalian Genomes, Molecular Biology and Evolution, Volume 36, Issue 4, April 2019, Pages 861â€“862, https://doi.org/10.1093/molbev/msz015
 
     --------------------------------------
 
 MACSE V2.03 (extensively used in this pipeline)
-    Vincent Ranwez, Emmanuel J P Douzery, Cédric Cambon, Nathalie Chantret, Frédéric Delsuc, MACSE v2: Toolkit for the Alignment of Coding Sequences Accounting for Frameshifts and Stop Codons, Molecular Biology and Evolution, Volume 35, Issue 10, October 2018, Pages 2582–2584, https://doi.org/10.1093/molbev/msy159
+    Vincent Ranwez, Emmanuel J P Douzery, CÃ©dric Cambon, Nathalie Chantret, FrÃ©dÃ©ric Delsuc, MACSE v2: Toolkit for the Alignment of Coding Sequences Accounting for Frameshifts and Stop Codons, Molecular Biology and Evolution, Volume 35, Issue 10, October 2018, Pages 2582â€“2584, https://doi.org/10.1093/molbev/msy159
 
     --------------------------------------
 
@@ -49,24 +49,30 @@ HMMCleaner V1_8_VR2 (default)
             HMMCleaner has since been re-written by Arnaud Di Franco and a more recent release of HMMCleaner is available here: https://metacpan.org/pod/HmmCleaner.pl
 
 %post
-    apt-get -y update
-    apt-get -y install unzip
-    apt-get -y install wget
-    apt-get -y install openjdk-8-jre
-    apt-get -y install hmmer=3.1b2-2
-    apt-get -y install muscle=1:3.8.31+dfsg-1
-    apt-get -y install mafft=7.271-1
-		apt-get -y install svn
+  apt-get -y update
 
-    apt list muscle mafft
-    rm -rf /var/lib/apt/lists/*
+  apt-get -y update
+  apt-get -y install unzip
+  apt-get -y install wget
+  apt-get -y install openjdk-8-jre
+  apt-get -y install hmmer=3.1b2-2
+  apt-get -y install muscle=1:3.8.31+dfsg-1
+  apt-get -y install mafft=7.271-1
 
-		svn copy https://github.com/ranwez/MACSE_V2_PIPELINES/MACSE_BARCODE
-		
-    wget https://bioweb.supagro.inra.fr/macse/releases/OMM_MACSE_V10.01.zip
-    unzip OMM_MACSE_V10.01.zip
-    chmod 755 /OMM_MACSE_V10.01/*.sh
-    chmod 755 /OMM_MACSE_V10.01/*/*.sh
+  ## neened to install subversion
+  apt-get -y install software-properties-common
+  add-apt-repository universe
+  apt-get -y update
+  apt-get -y install subversion
+  ## end of subversion dependencies
+
+  rm -rf /var/lib/apt/lists/*
+
+		svn checkout https://github.com/ranwez/MACSE_V2_PIPELINES/trunk/OMM_MACSE
+		svn checkout https://github.com/ranwez/MACSE_V2_PIPELINES/trunk/UTILS
+
+    #chmod 755 /OMM_MACSE_V10.01/*.sh
+    #chmod 755 /OMM_MACSE_V10.01/*/*.sh
 
 		# Folders neeeded for the cirad Cluster
 			 mkdir /work
@@ -75,21 +81,23 @@ HMMCleaner V1_8_VR2 (default)
 			 mkdir -p /gs7k1/home/
 			 mkdir -p /usr1/compte_mess
 
+       chmod +x /UTILS/LGS_Fasta/*/S_*.sh
+       chmod +x /OMM_MACSE/S_*.sh
+
 %environment
     export LC_ALL=C
-    export LG_HOME_PATH="/OMM_MACSE_V10.01/"
+    export LG_UTILS_PATH="/UTILS/"
     export LG_MAFFT="mafft"
     export LG_MUSCLE="muscle"
-    export LG_MACSE="/OMM_MACSE_V10.01/macse_v2.03.jar"
-    export LG_HMMCLEANER="/OMM_MACSE_V10.01/HMMcleanerV1_8_VR2/HMMcleanAA_VR.pl "
+    export LG_MACSE="/UTILS/macse_v2.03.jar"
+    export LG_HMMCLEANER="/UTILS/HMMcleanerV1_8_VR2/HMMcleanAA_VR.pl "
 
 
 
 %runscript
-    exec bash /OMM_MACSE_V10.01/S_OMM_MACSE_V10.01.sh "$@"
+    exec bash /OMM_MACSE/S_OMM_MACSE_V10.02.sh "$@"
 
 %files
-    #OMM_MACSE_V10.01.zip
 
 %labels
     Author Vincent Ranwez
