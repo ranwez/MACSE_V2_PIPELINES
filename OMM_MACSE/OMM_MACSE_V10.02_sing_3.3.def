@@ -81,7 +81,7 @@ HMMCleaner V1_8_VR2 (default)
 			 mkdir -p /gs7k1/home/
 			 mkdir -p /usr1/compte_mess
 
-       chmod +x /UTILS/LGS_Fasta/*/S_*.sh
+       chmod +x /UTILS/LGS_Fasta/S_*.sh
        chmod +x /OMM_MACSE/S_*.sh
 
 %environment
