@@ -1,0 +1,45 @@
+-del-charchan
+ This library need an installation of HMMER 3.0 (March 2010); 
+ Avalaible on http://hmmer.org/
+ For compatible UNIX distributions :   < sudo apt-get install hmmer >
+
+ USAGE :
+  ./HMMcleanAA.pl [--no-hmm] [--change-id] [--del-char c] [--define-cost c1 c2 c3 c4] <amino acid fasta file> <threshold>
+
+ <threshold> 10 is a value good value to test. A low threshold will lead to more deleted segment.
+
+
+
+ OUTPUT :
+  On the standard output, for each sequence of the fasta file given as input :
+    <fasta file path>	<sequence identifier>	<number of position deleted>
+   The fasta file created for the new alignment with
+    - spaces (-) standing for old gap positions
+    - white spaces standing for newly deleted position
+   The html file to visualise the results (disabled in the current version)
+   The log file with the list of deleted regions
+   The score file to see the HMMER result
+
+ OPTION :
+
+    --no-hmm 
+	If you want to try without installing HMMER.
+		-- At your own risk --
+
+    --change-id
+	Will add a specific pattern to the species names.
+
+    --del-char c
+	Will use the user define character to mask the deleted positions
+
+    --define-cost c1 c2 c3 c4
+	Define the 4 cost for Hmmer output constraint on cost are c1 <= c2 <= 0 <= c3 <= c4
+	Default is -3 -1 threshold/5 threshold/2
+
+
+ TEST :
+  ./HMMcleanAA.pl Ten_Fasta_For_Testing/GNTPAN12210.ali 10
+	
+
+ For any questions please contact raphael.poujol [at] umontreal.ca
+

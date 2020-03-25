@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -Euo pipefail
 
+# author : V. Ranwez
 
 ##############################################################
 ## handle parameters and IO files/folders
