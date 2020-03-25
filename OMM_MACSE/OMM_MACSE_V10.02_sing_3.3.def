@@ -23,19 +23,19 @@ If you use this pipeline please cite:
 =====================================
 
 OrthoMam v10 (the paper describing this pipeline)
-    Celine Scornavacca, Khalid Belkhir, Jimmy Lopez, RÃ©my Dernat, FrÃ©dÃ©ric Delsuc, Emmanuel J P Douzery, Vincent Ranwez, OrthoMaM v10: Scaling-Up Orthologous Coding Sequence and Exon Alignments with More than One Hundred Mammalian Genomes, Molecular Biology and Evolution, Volume 36, Issue 4, April 2019, Pages 861â€“862, https://doi.org/10.1093/molbev/msz015
+    Celine Scornavacca, Khalid Belkhir, Jimmy Lopez, Rémy Dernat, Frédéric Delsuc, Emmanuel J P Douzery, Vincent Ranwez, OrthoMaM v10: Scaling-Up Orthologous Coding Sequence and Exon Alignments with More than One Hundred Mammalian Genomes, Molecular Biology and Evolution, Volume 36, Issue 4, April 2019, Pages 861â€“862, https://doi.org/10.1093/molbev/msz015
 
     --------------------------------------
 
 MACSE V2.03 (extensively used in this pipeline)
-    Vincent Ranwez, Emmanuel J P Douzery, CÃ©dric Cambon, Nathalie Chantret, FrÃ©dÃ©ric Delsuc, MACSE v2: Toolkit for the Alignment of Coding Sequences Accounting for Frameshifts and Stop Codons, Molecular Biology and Evolution, Volume 35, Issue 10, October 2018, Pages 2582â€“2584, https://doi.org/10.1093/molbev/msy159
+    Vincent Ranwez, Emmanuel J P Douzery, Cédric Cambon, Nathalie Chantret, Frédéric Delsuc, MACSE v2: Toolkit for the Alignment of Coding Sequences Accounting for Frameshifts and Stop Codons, Molecular Biology and Evolution, Volume 35, Issue 10, October 2018, Pages 2582â€“2584, https://doi.org/10.1093/molbev/msy159
 
     --------------------------------------
 
-MAFFT v7.271 (default) or MUSCLE v3.8.31 (depending on selected options)
+MAFFT v7.271 (default) or MUSCLE v3.8.31 or PRANK v170427(depending on selected options)
     Katoh K., Standley D.M. (2013). MAFFT multiple sequence alignment software version 7: improvements in performance and usability. Molecular biology and evolution, 30(4), 772-780. Edgar R.C. (2004).
-    MUSCLE: multiple sequence alignment with high accuracy and high throughput. Nucleic acids research, 32(5), 1792-1797.
-
+    Edgar RC. (2004). MUSCLE: multiple sequence alignment with high accuracy and high throughput. Nucleic acids research, 32(5), 1792-1797.
+    Löytynoja (2014). Phylogeny-aware alignment with PRANK. Methods Mol Biol 1079:155–170
     --------------------------------------
 
 HMMCleaner V1_8_VR2 (default)
@@ -66,6 +66,12 @@ HMMCleaner V1_8_VR2 (default)
   apt-get -y install subversion
   ## end of subversion dependencies
 
+  ## install prank
+  sudo apt-get install libc6
+  wget http://wasabiapp.org/download/prank/prank.linux64.170427.tgz
+  tar -zxvf prank.linux64.170427.tgz
+  ##
+
   rm -rf /var/lib/apt/lists/*
 
 		svn checkout https://github.com/ranwez/MACSE_V2_PIPELINES/trunk/OMM_MACSE
@@ -89,6 +95,7 @@ HMMCleaner V1_8_VR2 (default)
     export LG_UTILS_PATH="/UTILS/"
     export LG_MAFFT="mafft"
     export LG_MUSCLE="muscle"
+    export LG_PRANK="/prank/bin/prank"
     export LG_MACSE="/UTILS/macse_v2.03.jar"
     export LG_HMMCLEANER="/UTILS/HMMcleanerV1_8_VR2/HMMcleanAA_VR.pl "
 

@@ -12,7 +12,7 @@ printf "\n\n" # separate script message from the rest
 function quit_pb_option() {
     printf "\n\nThis script aligns sequences using: 1) MACSE pre-filtering, 2) MACSE alignment to find frameshifts, 3) MAFFT for aligning the resulting AA sequences, and 4) HMMcleaner for cleaning resulting alignments.\n"
     printf "\nyour command line is incorrect please check your options"
-    printf "\n usage example:\n$SCRIPT_NAME --out_dir out_dir --PREFIX PREFIX --in_seq_file seq_file.fasta [--genetic_code_number code_number] [--alignAA_soft MAFFT/MUSCLE] ][--aligner_extra_option] [--min_percent_NT_at_ends 0.7] [--out_detail_dir SAVE_DETAILS/] [--in_seq_lr_file less_reliable_seq_file.fasta] [--java_mem 500m] [--no_prefiltering] [--no_FS_detection] [--no_filtering] [--no_postfiltering] [--replace_FS_by_gaps] [--save_details]\n"
+    printf "\n usage example:\n$SCRIPT_NAME --out_dir out_dir --PREFIX PREFIX --in_seq_file seq_file.fasta [--genetic_code_number code_number] [--alignAA_soft MAFFT/MUSCLE/PRANK] ][--aligner_extra_option] [--min_percent_NT_at_ends 0.7] [--out_detail_dir SAVE_DETAILS/] [--in_seq_lr_file less_reliable_seq_file.fasta] [--java_mem 500m] [--no_prefiltering] [--no_FS_detection] [--no_filtering] [--no_postfiltering] [--replace_FS_by_gaps] [--save_details]\n"
     printf "\n\nFor further details please check the documentation on MACSE website: https://bioweb.supagro.inra.fr/macse\n\n"
     exit 1
 }
@@ -51,7 +51,7 @@ while (( $# > 0 )); do
        --debug)                      debug=1                                                                    ; shift 1;;
        --save_details)               SAVE_DETAILS=1                                                             ; shift 1;;
        --alignAA_soft)               ALIGN_SOFT="$2"                                           || quit_pb_option; shift 2
-           if [[ ! "$ALIGN_SOFT" =~ ^(MAFFT|MUSCLE)$ ]];  then
+           if [[ ! "$ALIGN_SOFT" =~ ^(MAFFT|MUSCLE|PRANK)$ ]];  then
              echo " Alignment software $ALIGN_SOFT is not handle, please choose between MAFFT or MUSCLE"; quit_pb_option
            fi
            ;;
@@ -73,6 +73,7 @@ printf "============================ PROCESSING $PREFIX\n"
 # PROGRAMS ENVIRONMENT
 mafft="${LG_MAFFT} --quiet $ALIGNER_EXTRA_OPTION"
 muscle="${LG_MUSCLE} $ALIGNER_EXTRA_OPTION"
+prank="${LG_PRANK} $ALIGNER_EXTRA_OPTION"
 hmmcleaner="perl ${LG_HMMCLEANER}"
 macse="java -jar -Xmx${JAVA_MEM} ${LG_MACSE}"
 
@@ -144,7 +145,10 @@ case $ALIGN_SOFT in
     ${mafft} __${PREFIX}_homol_AA.fasta > __${PREFIX}_homol_AA.aln
     ;;
   "MUSCLE" )
-    ${LG_MUSCLE} -in __${PREFIX}_homol_AA.fasta -out __${PREFIX}_homol_AA.aln
+    ${muscle} -in __${PREFIX}_homol_AA.fasta -out __${PREFIX}_homol_AA.aln
+    ;;
+  "PRANK" )
+    ${prank} -d=__${PREFIX}_homol_AA.fasta -o=__${PREFIX}_homol_AA.aln
     ;;
 esac
 
