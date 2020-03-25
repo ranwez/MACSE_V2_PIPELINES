@@ -1,0 +1,82 @@
+
+BootStrap: library
+From: ubuntu:16.04
+
+
+%help
+	
+
+This container launches the MACSE_ALFIX pipeline used to buid the OrthoMaM Database (V10).
+=======================================================================================
+
+    usage (basic): MACSE_ALFIX_v01.sif --out_dir out_dir --out_file_prefix out_file_prefix --in_seq_file nucleotide_coding_sequences_to_align.fasta
+    usage (help) : MACSE_ALFIX_v01.sif
+
+    usage (example): MACSE_ALFIX_v01.sif --in_seq_file LOC_48720.fasta --out_dir RES_LOC_48720 --out_file_prefix LOC_48720 
+
+For more details please see the pipeline documentation pages on the MACSE website:
+==================================================================================
+https://bioweb.supagro.inra.fr/macse
+
+
+If you use this pipeline please cite:
+=====================================
+
+The paper describing this pipeline
+    Vincent Ranwez, Nathalie Chantret, Frédéric Delsuc
+    Aligning protein-coding nucleotide sequences with MACSE
+    submitted to Methods in Molecular Biology
+    
+    --------------------------------------
+
+MACSE V2.03 (extensively used in this pipeline)
+    Vincent Ranwez, Emmanuel J P Douzery, Cédric Cambon, Nathalie Chantret, Frédéric Delsuc, MACSE v2: Toolkit for the Alignment of Coding Sequences Accounting for Frameshifts and Stop Codons, Molecular Biology and Evolution, Volume 35, Issue 10, October 2018, Pages 2582–2584, https://doi.org/10.1093/molbev/msy159
+
+    --------------------------------------
+
+HMMCleaner V1_8_VR2 (default)
+    Di Franco, Arnaud, et al. Evaluating the usefulness of alignment filtering methods to reduce the impact of errors on evolutionary inferences. BMC Evolutionary Biology, vol. 19, no. 1, 2019. Gale Academic Onefile, Accessed 13 Oct. 2019.
+        
+    Note that this script used a modified version (V1_8_VR2) of HMMCleaner V1_8 developped by Raphael Poujol
+        Vincent Ranwez modified the original perl script so that
+            1. sequences and sequence names are unchanged even when they contain unusual characters
+            2. all output files are saved in the current directory (rather that being spread in the directory containing the input fasta file and HMMCleaner perl script)
+    
+            HMMCleaner has since been re-written by Arnaud Di Franco and a more recent release of HMMCleaner is available here: https://metacpan.org/pod/HmmCleaner.pl
+
+%post
+    apt-get -y update 
+    apt-get -y install unzip
+    apt-get -y install wget
+    apt-get -y install openjdk-8-jre
+    apt-get -y install hmmer=3.1b2-2
+    
+    rm -rf /var/lib/apt/lists/*
+    
+    wget https://bioweb.supagro.inra.fr/macse/releases/MACSE_ALFIX_V01.zip
+    unzip MACSE_ALFIX_V01.zip
+    chmod 755 /MACSE_ALFIX_V01/*.sh
+    chmod 755 /MACSE_ALFIX_V01/*/*.sh
+    
+
+
+%environment
+    export LC_ALL=C
+    export LG_HOME_PATH="/MACSE_ALFIX_V01/"
+    export LG_MACSE="/MACSE_ALFIX_V01/macse_v2.03.jar"
+    export LG_HMMCLEANER="/MACSE_ALFIX_V01/HMMcleanerV1_8_VR2/HMMcleanAA_VR.pl "
+
+    
+
+%runscript
+    exec bash /MACSE_ALFIX_V01/S_MACSE_ALFIX.sh "$@"
+
+%files
+    #
+
+%labels
+    Author Vincent Ranwez
+
+#sudo singularity  build MACSE_ALFIX_V01.sif MACSE_ALFIX_V01_sing.def
+#singularity run MACSE_ALFIX_V01.sif
+#singularity run-help MACSE_ALFIX_V01.sif
