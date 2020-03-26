@@ -154,7 +154,8 @@ sed -i -e '/^[^>]/s/[!*?]/X/g'  __${PREFIX}_homol_AA.fasta                      
 # align AA sequences
 printf "\n\n============== ALIGN AMINO SEQUENCES\n"
 
-#align AA using third party program and report gap in NT seq
+#align AA using third party program and report gap in NT seq. Show the command line to the user
+set -x
 case $ALIGN_SOFT in
   "MAFFT" )
     ${mafft} __${PREFIX}_homol_AA.fasta > __${PREFIX}_homol_AA.aln
@@ -166,7 +167,7 @@ case $ALIGN_SOFT in
     ${prank} -d=__${PREFIX}_homol_AA.fasta -o=__${PREFIX}_homol_AA.aln; mv __${PREFIX}_homol_AA.aln.best.fas __${PREFIX}_homol_AA.aln;
     ;;
 esac
-
+set +x
 # get the NT and AA alignment with * and !
 $macse -prog reportGapsAA2NT -align_AA  __${PREFIX}_homol_AA.aln -seq __${PREFIX}_homol_NT.fasta -out_NT __${PREFIX}_homol_NT.aln
 cp __${PREFIX}_homol_NT.aln __${PREFIX}_unmask_NT.aln
