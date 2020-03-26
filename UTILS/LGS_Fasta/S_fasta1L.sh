@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -Euo pipefail
 
+SCRIPT_NAME=$(basename "$0")
 
 function quit_pb_option() {
     printf "\n\nThis script transform the input fasta file so that each sequence is written on a single line.\n"

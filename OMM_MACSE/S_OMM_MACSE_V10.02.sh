@@ -117,7 +117,7 @@ else
         cp "$IN_SEQ_LR_FILE" __${PREFIX}_homol_tmp_NT_lr.fasta
     fi
     # ensure that the sequence are written on a single line also in this case
-    $LG_UTILS/LGS_Fasta/S_fasta1L.sh --in_seq_file __${PREFIX}_homol_tmp_NT.fasta -out_seq_file __${PREFIX}_homol_tmp_NT_1L.fasta
+    $LG_UTILS/LGS_Fasta/S_fasta1L.sh --in_seq_file __${PREFIX}_homol_tmp_NT.fasta --out_seq_file __${PREFIX}_homol_tmp_NT_1L.fasta
     rm __${PREFIX}_homol_tmp_NT.fasta; mv __${PREFIX}_homol_tmp_NT_1L.fasta __${PREFIX}_homol_tmp_NT.fasta
 
     echo "seqName;initialSeqLength;nbKeep;nbTrim;nbInformativeTrim;percentHomologExcludingExtremities;percentHomologIncludingExtremities;keptSequences" >__${PREFIX}_homol_fiter.csv
