@@ -105,6 +105,7 @@ if(( $PRE_FILTERING > 0)); then
     printf "\n\n============== MACSE PRE_FILTERING\n"
     if (( $HAS_SEQ_LR > 0 )); then
         $macse -prog trimNonHomologousFragments $GC_OPT -seq __all_seq.fasta -out_NT __${PREFIX}_homol_tmp_NT_all.fasta -out_AA __${PREFIX}_homol_tmp_all_AA.fasta -out_trim_info __${PREFIX}_homol_fiter.csv -out_mask_detail __${PREFIX}_NonHomolFilter_NT_mask_detail.fasta -min_trim_in 60 -min_trim_ext 45 -debug
+        __${PREFIX}_homol_tmp_NT_all.fasta
         for s in $(grep ">" $IN_SEQ_FILE); do grep -A1 -e"$s$" __${PREFIX}_homol_tmp_NT_all.fasta; done >  __${PREFIX}_homol_tmp_NT.fasta
         for s in $(grep ">" $IN_SEQ_LR_FILE); do grep -A1 -e"$s$" __${PREFIX}_homol_tmp_NT_all.fasta; done >  __${PREFIX}_homol_tmp_NT_lr.fasta
     else
@@ -115,6 +116,9 @@ else
     if (( $HAS_SEQ_LR > 0 )); then
         cp "$IN_SEQ_LR_FILE" __${PREFIX}_homol_tmp_NT_lr.fasta
     fi
+    # ensure that the sequence are written on a single line also in this case
+    $LG_HOME/LGS_Fasta/S_fasta1L.sh --in_seq_file __${PREFIX}_homol_tmp_NT.fasta -out_seq_file __${PREFIX}_homol_tmp_NT_1L.fasta
+    rm __${PREFIX}_homol_tmp_NT.fasta; mv __${PREFIX}_homol_tmp_NT_1L.fasta __${PREFIX}_homol_tmp_NT.fasta
 
     echo "seqName;initialSeqLength;nbKeep;nbTrim;nbInformativeTrim;percentHomologExcludingExtremities;percentHomologIncludingExtremities;keptSequences" >__${PREFIX}_homol_fiter.csv
     for s in $(grep ">" __all_seq.fasta | cut -f2 -d">"); do
