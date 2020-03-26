@@ -25,7 +25,6 @@ function quit_pb_option() {
 
 KEEP_FS=0;
 while (( $# > 0 )); do
-    echo "parse $1"
     case "$1" in
 
         --in_seq_file)

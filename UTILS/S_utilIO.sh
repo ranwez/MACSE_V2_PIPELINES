@@ -29,6 +29,8 @@ function get_out_dir_param(){
   local dir=$(readlink -f "$2")
   if [ ! -e  $dir ]; then
     mkdir "$dir"
+  else
+    printf "Problem with option $1, directory $2 already  exist" >&2
   fi
   echo $dir
 }
