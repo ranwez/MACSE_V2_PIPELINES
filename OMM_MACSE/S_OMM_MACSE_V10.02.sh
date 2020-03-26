@@ -108,7 +108,7 @@ if(( $PRE_FILTERING > 0)); then
         for s in $(grep ">" $IN_SEQ_FILE); do grep -A1 -e"$s$" __${PREFIX}_homol_tmp_NT_all.fasta; done >  __${PREFIX}_homol_tmp_NT.fasta
         for s in $(grep ">" $IN_SEQ_LR_FILE); do grep -A1 -e"$s$" __${PREFIX}_homol_tmp_NT_all.fasta; done >  __${PREFIX}_homol_tmp_NT_lr.fasta
     else
-      $macse -prog trimNonHomologousFragments $GC_OPT -seq __all_seq.fasta -restrict __reliable.list -out_NT __${PREFIX}_homol_tmp_NT.fasta -out_AA __${PREFIX}_homol_tmp_all_AA.fasta -out_trim_info __${PREFIX}_homol_fiter.csv -out_mask_detail __${PREFIX}_NonHomolFilter_NT_mask_detail.fasta -min_trim_in 60 -min_trim_ext 45 -debug
+      $macse -prog trimNonHomologousFragments $GC_OPT -seq __all_seq.fasta -out_NT __${PREFIX}_homol_tmp_NT.fasta -out_AA __${PREFIX}_homol_tmp_AA.fasta -out_trim_info __${PREFIX}_homol_fiter.csv -out_mask_detail __${PREFIX}_NonHomolFilter_NT_mask_detail.fasta -min_trim_in 60 -min_trim_ext 45 -debug
     fi
 else
     cp $IN_SEQ_FILE __${PREFIX}_homol_tmp_NT.fasta
@@ -126,8 +126,10 @@ fi
 
 if(( FS_DETECTION > 0 )); then
   printf "\n\n============== MACSE FRAMESHIFT DETECTION\n"
-  echo "$macse -prog alignSequences $GC_OPT -seq __${PREFIX}_homol_tmp_NT.fasta -seq_lr __${PREFIX}_homol_tmp_NT_lr.fasta -optim 2 -max_refine_iter 3 -local_realign_init 0.2 -out_NT __${PREFIX}_homol_tmp_NT.aln -out_AA __${PREFIX}_homol_tmp_AA.aln"
-  $macse -prog alignSequences $GC_OPT -seq __${PREFIX}_homol_tmp_NT.fasta -seq_lr __${PREFIX}_homol_tmp_NT_lr.fasta -optim 2 -max_refine_iter 3 -local_realign_init 0.2 -out_NT __${PREFIX}_homol_tmp_NT.aln -out_AA __${PREFIX}_homol_tmp_AA.aln
+  SEQ_LR_OPT="";
+  if [ -s "__${PREFIX}_homol_tmp_NT_lr.fasta" ]; then SEQ_LR_OPT="-seq_lr __${PREFIX}_homol_tmp_NT_lr.fasta"; fi
+  echo "$macse -prog alignSequences $GC_OPT -seq __${PREFIX}_homol_tmp_NT.fasta  $SEQ_LR_OPT -optim 2 -max_refine_iter 3 -local_realign_init 0.2 -out_NT __${PREFIX}_homol_tmp_NT.aln -out_AA __${PREFIX}_homol_tmp_AA.aln"
+  $macse -prog alignSequences $GC_OPT -seq __${PREFIX}_homol_tmp_NT.fasta $SEQ_LR_OPT -optim 2 -max_refine_iter 3 -local_realign_init 0.2 -out_NT __${PREFIX}_homol_tmp_NT.aln -out_AA __${PREFIX}_homol_tmp_AA.aln
 
   #check if it is fine or not
   if [ ! -f __${PREFIX}_homol_tmp_NT.aln ] ; then
@@ -139,6 +141,7 @@ if(( FS_DETECTION > 0 )); then
    sed -e '/^[^>]/s/-*//g'  __${PREFIX}_homol_tmp_AA.aln > __${PREFIX}_homol_AA.fasta # unaligned AA but preserve FS and stop
 else
   cp __${PREFIX}_homol_tmp_NT.fasta __${PREFIX}_homol_NT.fasta
+  cat __${PREFIX}_homol_tmp_NT_lr.fasta >> __${PREFIX}_homol_NT.fasta
   $macse -prog translateNT2AA $GC_OPT -keep_final_stop_ON -seq __${PREFIX}_homol_NT.fasta -out_AA __${PREFIX}_homol_AA.fasta
 fi
 sed -i -e '/^[^>]/s/[!*?]/X/g'  __${PREFIX}_homol_AA.fasta                         # mask FS and STOP that are not understand except by MACSE
