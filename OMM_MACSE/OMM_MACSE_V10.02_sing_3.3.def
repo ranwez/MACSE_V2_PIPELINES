@@ -79,6 +79,7 @@ HMMCleaner V1_8_VR2 (default)
 
     chmod 755 /OMM_MACSE/*.sh
     chmod -R 755 /prank
+    chmod -R 755 /UTILS/LGS_FASTA/*.sh
 
 		# Folders neeeded for the cirad Cluster
 			 mkdir /work
@@ -91,7 +92,7 @@ HMMCleaner V1_8_VR2 (default)
 
 %environment
     export LC_ALL=C
-    export LG_UTILS_PATH="/UTILS/"
+    export LG_UTILS_PATH="/UTILS"
     export LG_MAFFT="mafft"
     export LG_MUSCLE="muscle"
     export LG_PRANK="/prank/bin/prank"
