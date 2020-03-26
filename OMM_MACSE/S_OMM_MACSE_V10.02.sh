@@ -118,7 +118,7 @@ else
 
     echo "seqName;initialSeqLength;nbKeep;nbTrim;nbInformativeTrim;percentHomologExcludingExtremities;percentHomologIncludingExtremities;keptSequences" >__${PREFIX}_homol_fiter.csv
     for s in $(grep ">" __all_seq.fasta | cut -f2 -d">"); do
-          echo "${s};NA;NA;NA;NA;NA;NA;NA;true" >>__${PREFIX}_homol_fiter.csv
+          echo "${s};NA;NA;NA;NA;NA;NA;true" >>__${PREFIX}_homol_fiter.csv
     done
     $LG_UTILS/LGS_Fasta/S_unmask_seq.sh --in_seq_file __all_seq.fasta --out_seq_file __${PREFIX}_NonHomolFilter_NT_mask_detail.fasta
 
