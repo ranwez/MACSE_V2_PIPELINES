@@ -8,14 +8,16 @@ set -Euo pipefail
 ##############################################################
 
 # get useful directory with absolute path and include dependencies
+script_name=$(basename "$0")
 wd_dir="$PWD"
 script_dir=$(dirname $(readlink -f "$0"))
 source "$script_dir"/S_utilIO.sh
 
 
 function quit_pb_option() {
-    printf "\nOptions: --in_refSeq --in_seqFile [--in_geneticCode] [--out_repSeq] [--out_homologSeq] [--out_listRevComp] [--in_minClustSize] [--in_maxRepresentativeSeqs] [--debug]\n"
-    printf "\n usage example: --in_refSeq DATA/Hsapiens_COI5P.fasta --in_seqFile DATA/Mammalia_BOLD_141145seq_2020.fasta --in_geneticCode 2 \n"
+    printf "\n\nOptions: --in_refSeq --in_seqFile [--in_geneticCode] [--out_repSeq] [--out_homologSeq] [--out_listRevComp] [--in_minClustSize] [--in_maxRepresentativeSeqs] [--debug]\n"
+    printf "\n usage example:\n$script_name --in_refSeq DATA/Hsapiens_COI5P.fasta --in_seqFile DATA/Mammalia_BOLD_141145seq_2020.fasta --in_geneticCode 2 \n"
+    printf "\n\nFor further details please check the documentation on MACSE website: https://bioweb.supagro.inra.fr/macse\n\n"
     exit 1
 }
 
@@ -101,3 +103,5 @@ $seqtk subseq relevant_seq.fasta representatives_id > representatives.fasta
 cp representatives.fasta $out_repSeq
 cp relevant_seq.fasta $out_homologSeq
 cp relevant_rev_id $out_listRevComp
+
+cd $wd_dir

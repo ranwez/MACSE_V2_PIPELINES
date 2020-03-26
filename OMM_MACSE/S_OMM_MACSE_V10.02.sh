@@ -60,6 +60,14 @@ while (( $# > 0 )); do
     esac
 done
 
+# handle aligner default options
+if [ -z ${aligner_extra_option+x}  ];    then
+  case $ALIGN_SOFT in
+    "MAFFT" ) ALIGNER_EXTRA_OPTION= "--localpair --maxiterate 1000";;
+  *) ALIGNER_EXTRA_OPTION=""
+  esac
+fi
+
 # check that mandatory parameters are set
 # https://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash
 if [ -z ${IN_SEQ_FILE+x}  ];    then printf "mandatory --in_seq_file is missing";     quit_pb_option; fi
