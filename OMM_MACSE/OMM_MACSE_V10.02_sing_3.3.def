@@ -78,7 +78,7 @@ HMMCleaner V1_8_VR2 (default)
 		svn checkout https://github.com/ranwez/MACSE_V2_PIPELINES/trunk/UTILS
 
     chmod 755 /OMM_MACSE/*.sh
-    chmod -R 755 /prank/bin/
+    chmod -R 755 /prank
 
 		# Folders neeeded for the cirad Cluster
 			 mkdir /work
