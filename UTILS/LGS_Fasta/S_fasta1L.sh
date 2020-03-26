@@ -26,4 +26,4 @@ done
 # https://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash
 if [ -z ${IN_SEQ_FILE+x}  ];    then printf "mandatory --in_seq_file is missing";     quit_pb_option; fi
 if [ -z ${OUT_SEQ_FILE+x} ];    then printf "mandatory --OUT_SEQ_FILE is missing";    quit_pb_option; fi
-awk 'BEGIN{first=1} {if ($0 ~ /^>/){if(first==0){printf "\n"}; printf($0"\n"); first=0;}else {printf $0}} END{printf "\n"}' ___rbcl_NonHomolFilter_NT_mask_detail.fasta >res1L.fasta
+awk 'BEGIN{first=1} {if ($0 ~ /^>/){if(first==0){printf "\n"}; printf($0"\n"); first=0;}else {printf $0}} END{printf "\n"}' "$IN_SEQ_FILE" > "$OUT_SEQ_FILE"
