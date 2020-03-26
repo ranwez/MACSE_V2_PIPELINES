@@ -17,7 +17,7 @@ source "$LG_UTILS"/S_utilIO.sh
 while (( $# > 0 )); do
     case "$1" in
 	     --in_seq_file)                IN_SEQ_FILE=$(get_in_file_param "$1" "$2")               || quit_pb_option ; shift 2;;
-	     --out_seq_file)               OUT_SEQ_FILE=$(get_in_file_param "$1" "$2")               || quit_pb_option ; shift 2;;
+	     --out_seq_file)               OUT_SEQ_FILE=$(get_out_file_param "$1" "$2")               || quit_pb_option ; shift 2;;
 	      *) printf "Option $1 is unknown please ckeck your command line"; quit_pb_option;;
     esac
 done
