@@ -79,7 +79,7 @@ HMMCleaner V1_8_VR2 (default)
 
     chmod 755 /OMM_MACSE/*.sh
     chmod -R 755 /prank
-    chmod -R 755 /UTILS/LGS_FASTA/*.sh
+    chmod -R 755 /UTILS/LGS_Fasta/*.sh
 
 		# Folders neeeded for the cirad Cluster
 			 mkdir /work
