@@ -15,10 +15,10 @@ The OMM_MACSE pipeline was originally developed to produce the alignments of the
 To ease the alignment of coding nucleotide sequences, we provide this ready to use alignment pipeline, which include optional filtering steps. This pipeline output the (filtered) nucleotide alignment, the corresponding (filtered) amino acid ones and the detail of the filtering steps (if some filtering steps were selected). By leveraging an external amino alignment software (MAFFT, MUSCLE or PRANK) it can handle hundreds of sequences of several kb. For smaller dataset (dozen of sequences) you may consider using the AlFiX pipeline. For barcoding analyses, please see our [dedicated strategies](https://github.com/ranwez/MACSE_V2_PIPELINES/). For more details please see the [online documentation](https://bioweb.supagro.inra.fr/macse/index.php?menu=docPipeline/docPipelineHtml) and the associated papers.
 
 Both pipelines include four optional filtering steps:
-    - a prefiltering performed before sequence alignment to mask non homologous sequence fragments that is done using trimNonHomologousFragments
-    - a filtering of the amino acid alignment to mask residues that seem to be misaligned. This is done using HmmCleaner at the amino acid level and reported at the codon level using reportMaskAA2NT
-    - a post-processing filtering is done to further masked isolated codons and patchy sequences (if 80% of a sequence has been masked it is probably better to remove it completely). This step is performed by setting options of reportMaskAA2NT accordingly.
-   - finally the extremities of the alignment are trimmed until a site with a minimal percentage of nucleotides is reached (using trimAlignment).
+    1. a prefiltering performed before sequence alignment to mask non homologous sequence fragments that is done using trimNonHomologousFragments
+    2. a filtering of the amino acid alignment to mask residues that seem to be misaligned. This is done using HmmCleaner at the amino acid level and reported at the codon level using reportMaskAA2NT
+    3. a post-processing filtering is done to further masked isolated codons and patchy sequences (if 80% of a sequence has been masked it is probably better to remove it completely). This step is performed by setting options of reportMaskAA2NT accordingly.
+    4. finally the extremities of the alignment are trimmed until a site with a minimal percentage of nucleotides is reached (using trimAlignment).
 
 All these filtering steps are active by default but can be individually turned OFF and the minimal percentage of nucleotides used for the final trimming step can be adjusted. The pipeline also provide detailed traceability information concerning the filtering processes.
 
