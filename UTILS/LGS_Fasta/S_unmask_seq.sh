@@ -44,4 +44,5 @@ while (( $# > 0 )); do
     esac
 done
 cp "$IN_SEQ_FILE" "$OUT_SEQ_FILE"
-sed -i -e '/^[^>]/s/\(.*\)/\L\1/g' "$OUT_SEQ_FILE"
+#sed -i -e '/^[^>]/s/\(.*\)/\L\1/g' "$OUT_SEQ_FILE"
+q "$OUT_SEQ_FILE"
