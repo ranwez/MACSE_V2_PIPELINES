@@ -21,3 +21,8 @@ Both pipelines include four optional filtering steps:
    - finally the extremities of the alignment are trimmed until a site with a minimal percentage of nucleotides is reached (using trimAlignment).
 
 All these filtering steps are active by default but can be individually turned OFF and the minimal percentage of nucleotides used for the final trimming step can be adjusted. The pipeline also provide detailed traceability information concerning the filtering processes.
+
+## Usage example
+```
+./OMM_MACSE_V10.02.sif --in_seq_file Magnoliophyta_RBCL_100seq_NT.fasta --out_dir ALIGN_RBCL_MAGNO --out_file_prefix magno_rbcl --genetic_code_number 11 --min_percent_NT_at_ends 0.2
+```
