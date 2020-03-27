@@ -12,7 +12,7 @@ printf "\n\n" # separate script message from the rest
 function quit_pb_option() {
     printf "\n\nThis script aligns sequences using: 1) MACSE pre-filtering, 2) MACSE alignment to find frameshifts, 3) MAFFT for aligning the resulting AA sequences, and 4) HMMcleaner for cleaning resulting alignments.\n"
     printf "\nyour command line is incorrect please check your options"
-    printf "\n usage example:\n$SCRIPT_NAME --out_dir out_dir --PREFIX PREFIX --in_seq_file seq_file.fasta [--genetic_code_number code_number] [--alignAA_soft MAFFT/MUSCLE/PRANK] ][--aligner_extra_option] [--min_percent_NT_at_ends 0.7] [--out_detail_dir SAVE_DETAILS/] [--in_seq_lr_file less_reliable_seq_file.fasta] [--java_mem 500m] [--no_prefiltering] [--no_FS_detection] [--no_filtering] [--no_postfiltering] [--replace_FS_by_gaps] [--save_details]\n"
+    printf "\n usage example:\n$SCRIPT_NAME --out_dir out_dir --PREFIX PREFIX --in_seq_file seq_file.fasta [--genetic_code_number code_number] [--alignAA_soft MAFFT/MUSCLE/PRANK] ][--aligner_extra_option "--localpair --maxiterate 1000"] [--min_percent_NT_at_ends 0.7] [--out_detail_dir SAVE_DETAILS/] [--in_seq_lr_file less_reliable_seq_file.fasta] [--java_mem 500m] [--no_prefiltering] [--no_FS_detection] [--no_filtering] [--no_postfiltering] [--replace_FS_by_gaps] [--save_details] [--debug]\n"
     printf "\n\nFor further details please check the documentation on MACSE website: https://bioweb.supagro.inra.fr/macse\n\n"
     exit 1
 }
