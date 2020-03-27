@@ -231,7 +231,7 @@ if(( ${PRE_FILTERING} > 0 && ${FILTERING} == 0 )); then
     cp __${PREFIX}_homol_fiter.csv $OUT_DIR/${PREFIX}_maskFull_stat.csv
     cp __${PREFIX}_NonHomolFilter_RmSeq_NT_mask_detail.fasta $OUT_DIR/${PREFIX}_maskFull_detail.fasta
 fi
-
+ 
 if(( ${FILTERING} > 0 )); then
     $LG_UTILS/LGS_Fasta/S_mask_removed_seq.sh --in_seq_file __${PREFIX}_NonHomolFilter_NT_mask_detail.fasta --in_keep_seq_info __${PREFIX}_homol_fiter.csv --out_seq_file __${PREFIX}_NonHomolFilter_RmSeq_NT_mask_detail.fasta --col_keep_info 8
     $macse -prog mergeTwoMasks -mask_file1 __${PREFIX}_NonHomolFilter_RmSeq_NT_mask_detail.fasta -mask_file2 __${PREFIX}_hmmCleaner_mask2_detail.aln -out_mask_detail __${PREFIX}_maskFull_detail.fasta -out_trim_info __${PREFIX}_maskFull_stat.csv
