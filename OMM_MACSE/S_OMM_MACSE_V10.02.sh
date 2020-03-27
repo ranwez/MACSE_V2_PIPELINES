@@ -7,6 +7,9 @@ set -Euo pipefail
 ######################################
 # SCRIPT PARAMETERS
 SCRIPT_NAME=$(basename "$0")
+OPTIONS="$@"
+DATE=$(date)
+
 printf "\n\n" # separate script message from the rest
 
 function quit_pb_option() {
@@ -238,7 +241,7 @@ if(( ${FILTERING} > 0 )); then
 fi
 
 cp $script_dir/readme_output.txt $OUT_DIR/
-
+printf "\n\nThis analysis was done with \n\t-script: $script_name\n\t-parmaeters:$OPTIONS\n\t-directory:$wd_dir\n\t-date:$DATE:" >> $OUT_DIR/readme_output.tx
 
 cd $wd_dir
 
