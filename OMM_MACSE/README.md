@@ -1,29 +1,28 @@
-# Representative Sequences
+# OMM_MACSE
+
+MACSE (Multiple Alignment of Coding SEquences Accounting for Frameshifts and Stop Codons) provides a complete toolkit dedicated to the multiple alignment of coding sequences that can be leveraged via both the command line and a Graphical User Interface (GUI). A pipeline for aligning hundreds of sequences.
 
 ## context
-Metabarcoding analysis often requires to handle thousands of sequences. Such datasets are not directly tractable with the alignSequence subprogram of MACSE, but they can be handled by sequentially adding your newly obtained sequences to a reference alignment containing sequences of related taxa for your targeted locus (COX1, matK, rbcL, etc...). We successfully used this approach in the Moorea project, [M. Leray et al 2013](https://frontiersinzoology.biomedcentral.com/articles/10.1186/1742-9994-10-34).
+A wide range of molecular analyses relies on multiple sequence alignments (MSA). Until now the most efficient solution to align nucleotide (NT) sequences containing open reading frames was to use indirect procedures that align amino acid (AA) translation before reporting the inferred gap positions at the codon level. There are two important pitfalls with this approach. Firstly, any premature stop codon impedes using such a strategy. Secondly, each sequence is translated with the same reading frame from beginning to end, so that the presence of a single additional nucleotide leads to both aberrant translation and alignment.
 
-The first step for such a strategy is to assemble a reliable reference alignment if you don't have one. To this aim we suggest the following strategy:
-1. collect a large datasets of sequence corresponding to your target marker and taxonomic level of interest  (e.g. by using your own full set of sequences or by querying a public database [BOLD](http://v3.boldsystems.org/))
-2. identify from this dataset a small subset of sequences that are representative of the observe diversity of this dataset
-3. align these sequences (e.g. using our [omm_macse pipeline](https://github.com/ranwez/MACSE_V2_PIPELINES/tree/master/OMM_MACSE) )
+[MACSE](https://bioweb.supagro.inra.fr/macse/) aligns coding NT sequences with respect to their AA translation while allowing NT sequences to contain multiple frameshifts and/or stop codons. MACSE is hence the first automatic solution to align protein-coding gene datasets containing non-functional sequences (pseudogenes) without disrupting the underlying codon structure. It has also proved useful in detecting undocumented frameshifts in public database sequences and in aligning next-generation sequencing reads/contigs against a reference coding sequence.
 
-As sequences may be in reverse complement or wrongly annotated, it is convenient to use a sequence carefully checked that is in the correct reading frame to guide the process.
+Various strategies can be built using the MACSE toolkit to handle datasets of various sizes and containing various types of sequences (contigs, pseudogenes, barcoding sequences).
 
-## The "representative sequences" pipeline
-This pipeline takes as input a sequence of reference and a set of input sequences and conduct the following steps using [MMSEQS2](https://github.com/soedinglab/MMseqs2), [MACSE](https://bioweb.supagro.inra.fr/macse/) and [seqtk] (https://github.com/lh3/seqtk)
-1. each input sequence is compared (in the six reading frame) to the amino acid translation of the reference sequences
-2. a set of sequences homologous to the reference one is identified, and they are reverse complemented when neeeded
-3. a clustering of the amino acid sequences homologous to the reference is conducted and a representative sequence is kept for each large ClusterRes
+## The OMM_MACSE pipeline
+The OMM_MACSE pipeline was originally developed to produce the alignments of the [OrthoMaM database](http://orthomam1.mbb.univ-montp2.fr:8080/OrthoMaM_v10b6/).
 
-This pipeline is encapsulated in a singularity container.
+To ease the alignment of coding nucleotide sequences, we provide this ready to use alignment pipeline, which include optional filtering steps. This pipeline output the (filtered) nucleotide alignment, the corresponding (filtered) amino acid ones and the detail of the filtering steps (if some filtering steps were selected). By leveraging an external amino alignment software (MAFFT, MUSCLE or PRANK) it can handle hundreds of sequences of several kb. For smaller dataset (dozen of sequences) you may consider using the AlFiX pipeline. For barcoding analyses, please see our [dedicated strategies](https://github.com/ranwez/MACSE_V2_PIPELINES/). For more details please see the [online documentation](https://bioweb.supagro.inra.fr/macse/index.php?menu=docPipeline/docPipelineHtml) and the associated papers.
+
+Both pipelines include four optional filtering steps:
+1. a prefiltering performed before sequence alignment to mask non homologous sequence fragments that is done using trimNonHomologousFragments
+2. a filtering of the amino acid alignment to mask residues that seem to be misaligned. This is done using HmmCleaner at the amino acid level and reported at the codon level using reportMaskAA2NT
+3. a post-processing filtering is done to further masked isolated codons and patchy sequences (if 80% of a sequence has been masked it is probably better to remove it completely). This step is performed by setting options of reportMaskAA2NT accordingly.
+4. finally the extremities of the alignment are trimmed until a site with a minimal percentage of nucleotides is reached (using trimAlignment).
+
+All these filtering steps are active by default but can be individually turned OFF and the minimal percentage of nucleotides used for the final trimming step can be adjusted. The pipeline also provide detailed traceability information concerning the filtering processes.
 
 ## Usage example
-A basic usage is as following:
 ```
-./representative_seqs_v01.01.sif --in_refSeq one_reference_seq.fasta --in_seqFile barcoding_sequences_to_align.fasta --in_geneticCode 11
-```
-For more details about the pipeline option simply launch it without any parametes:
-```
-./representative_seqs_v01.01.sif 
+./OMM_MACSE_V10.02.sif --in_seq_file Magnoliophyta_RBCL_100seq_NT.fasta --out_dir ALIGN_RBCL_MAGNO --out_file_prefix magno_rbcl --genetic_code_number 11 --min_percent_NT_at_ends 0.2
 ```
