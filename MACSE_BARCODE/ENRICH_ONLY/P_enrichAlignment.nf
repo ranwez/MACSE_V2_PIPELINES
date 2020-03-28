@@ -70,14 +70,14 @@ process mergeNoInsStat{
     """
 }
 
-process mergeTrimStat{
-  input:
-    file allTrimStatFile from splitTrimStat.collectFile(storeDir:"$workflow.launchDir/$params.resDIR", name:'alignAll_preTrimingStat.csv', keepHeader:true)
-  output:
-    file allTrimStatFile
-    """
-    """
-}
+//process mergeTrimStat{
+//  input:
+//    file allTrimStatFile from splitTrimStat.collectFile(storeDir:"$workflow.launchDir/$params.resDIR", name:'alignAll_preTrimingStat.csv', keepHeader:true)
+//  output:
+//    file allTrimStatFile
+//    """
+//    """
+//}
 
 //result.view { it.trim() }
 // module load bioinfo/nextflow/19.07.0.5106
