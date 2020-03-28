@@ -9,8 +9,8 @@ From: ubuntu:16.04
 This container identify a subset of representative sequences homologous to a reference.
 =======================================================================================
 
-    usage (basic): MACSE_barcoding_getRepSeqs_v01.01.sif --in_refSeq one_reference_seq.fasta --in_seqFile barcoding_sequences_to_align.fasta
-    usage (help) : MACSE_barcoding_getRepSeqs_v01.01.sif
+    usage (basic): representative_seqs_v01.01.sif --in_refSeq one_reference_seq.fasta --in_seqFile barcoding_sequences_to_align.fasta
+    usage (help) : representative_seqs_v01.01.sif
 
     usage (example): MACSE_barcoding_refAlign_v01.01.sif --in_refSeq Homo_sapiens_COI5P.fasta --in_seqFile  Mammalia_BOLD_COI5P.fasta
 
@@ -67,7 +67,8 @@ SEQTK (reverse complement DNA sequences)
 		   mkdir /projects
 			 mkdir -p /gs7k1/home/
 		   mkdir -p /usr1/compte_mess
-
+     # folders need for the migale cluster
+        mkdir -p /projet/extern/save/; mkdir -p /projet/montpellier/work; mkdir -p /projet/montpellier/work
 
 %environment
     export PATH=/mmseqs/bin/:$PATH
@@ -81,8 +82,3 @@ SEQTK (reverse complement DNA sequences)
 
 %labels
     Author Vincent Ranwez
-
-#singularity  build MACSE_barcoding_getRepSeq_V01.01.sif MACSE_barcoding_getRepSeq_V01.01_sing.def
-#singularity run MACSE_barcoding_getRepSeq_V01.01.sif
-#singularity run-help MACSE_barcoding_getRepSeq_V01.01.sif
-#./MACSE_barcoding_getRepSeq_V01.01.sif --in_refSeq Magnolia_officinalis_NC_020316.1_matK_ref.fasta --in_seqFile Magnoliophyta_BOLD_matK_107413seqs.fasta --in_geneticCode 11
