@@ -1,20 +1,36 @@
 #! usr/bin/env nextflow
 
-params.refAlign="Toto_refAlign.fasta"
-params.seqToAlign="Toto_allSeq.fasta"
+params.refSeq="refSeq.fasta"
+params.seqFile="allSeq.fasta"
+params.geneticCode="2"
+params.outPrefix="Mammals_COI"
 params.javaMem="2000m"
-params.resDIR="MACSE_BARCODE_RESULTS"
-params.gc="2"
 
+process getRepresentatives{
+  input:
+    file seqF from file(params.refSeq)
+    file refSeqFile from file(params.seqFile)
+  output:
+    file "${params.outPrefix}"_homolog.fasta into homologousSequences
+    file "${params.outPrefix}"_repSeq.fasta into representativeSequences
+    """
+    /S_get_representatives.sh --in_refSeq $refSeqFile --in_seqFile $seqF --in_geneticCode ${params.geneticCode} --in_minClustSize 10 --out_repSeq ${params.outPrefix}_repSeq.fasta --out_homologSeq ${params.outPrefix}_homolog.fasta --out_listRevComp ${params.outPrefix}_RevComSeqId.list
+    """
+}
 
-Channel
-    .fromPath( params.seqToAlign )
-    .splitFasta( by: 10, file:true)
-    .set {fasta_split }
+process alignRepresentatives{
+  input:
+    file repSeq from  representativeSequences
+  output:
+    file REF_"${params.outPrefix}"/"${params.outPrefix}"_final_align_NT.aln into refAlign
+    """
+    /OMM_MACSE/S_OMM_MACSE_V10.02.sh --in_seq_file ${repSeq} --out_dir REF_${params.outPrefix} --out_file_prefix ${params.outPrefix} --genetic_code_number ${params.geneticCode} --alignAA_soft MAFFT --min_percent_NT_at_ends 0.2 --java_mem 2000m'
+    """
+}
 
 process trimSequences {
   input:
-    file seqF from fasta_split
+    file seqF from (homologousSequences).splitFasta( by: 10, file:true).set {fasta_split }
     file refAlignFile from file(params.refAlign)
   output:
     file "${seqF.baseName}_trim_stat.csv" into splitTrimStat

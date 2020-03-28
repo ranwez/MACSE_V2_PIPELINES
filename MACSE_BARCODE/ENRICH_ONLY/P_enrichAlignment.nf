@@ -4,7 +4,7 @@ params.refAlign="Toto_refAlign.fasta"
 params.seqToAlign="Toto_allSeq.fasta"
 params.javaMem="2000m"
 params.resDIR="MACSE_BARCODE_RESULTS"
-params.gc="2"
+params.geneticCode="2"
 
 
 Channel
