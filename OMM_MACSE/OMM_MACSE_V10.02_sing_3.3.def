@@ -87,7 +87,7 @@ HMMCleaner V1_8_VR2 (default)
 			 mkdir /projects
 			 mkdir -p /gs7k1/home/
 			 mkdir -p /usr1/compte_mess
-    # folders need for the migale cluster
+    # folders needed for the migale cluster
       mkdir -p /projet/extern/save/; mkdir -p /projet/montpellier/work; mkdir -p /projet/montpellier/work
 
 %environment
