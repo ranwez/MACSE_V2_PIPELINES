@@ -1,5 +1,5 @@
 # Representative Sequences
-This pipelines identifies a small subset of sequences that are representative of the diversity of the barcoding input sequence dataset.
+This pipeline identifies a small subset of sequences that are representative of the diversity of the barcoding input sequence dataset.
 
 ## context
 Metabarcoding analysis often requires to handle thousands of sequences. Such datasets are not directly tractable with the alignSequence subprogram of MACSE, but they can be handled by sequentially adding your newly obtained sequences to a reference alignment containing sequences of related taxa for your targeted locus (COX1, matK, rbcL, etc...). We successfully used this approach in the Moorea project, [M. Leray et al 2013](https://frontiersinzoology.biomedcentral.com/articles/10.1186/1742-9994-10-34).
