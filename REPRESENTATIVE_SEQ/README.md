@@ -1,10 +1,11 @@
 # Representative Sequences
+This pipelines identifies a small subset of sequences that are representative of the diversity of the barcoding input sequence dataset.
 
 ## context
 Metabarcoding analysis often requires to handle thousands of sequences. Such datasets are not directly tractable with the alignSequence subprogram of MACSE, but they can be handled by sequentially adding your newly obtained sequences to a reference alignment containing sequences of related taxa for your targeted locus (COX1, matK, rbcL, etc...). We successfully used this approach in the Moorea project, [M. Leray et al 2013](https://frontiersinzoology.biomedcentral.com/articles/10.1186/1742-9994-10-34).
 
 The first step for such a strategy is to assemble a reliable reference alignment if you don't have one. To this aim we suggest the following strategy:
-1. collect a large datasets of sequence corresponding to your target marker and taxonomic level of interest  (e.g. by using your own full set of sequences or by querying a public database [BOLD](http://v3.boldsystems.org/))
+1. collect a large datasets of sequence corresponding to your target marker and taxonomic level of interest  (e.g. by using your own full set of sequences or by querying a public database such as  [BOLD](http://v3.boldsystems.org/))
 2. identify from this dataset a small subset of sequences that are representative of the observe diversity of this dataset
 3. align these sequences (e.g. using our [omm_macse pipeline](https://github.com/ranwez/MACSE_V2_PIPELINES/tree/master/OMM_MACSE) )
 
