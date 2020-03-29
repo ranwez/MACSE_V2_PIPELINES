@@ -11,8 +11,9 @@ process getRepresentatives{
     file seqF from file(params.refSeq)
     file refSeqFile from file(params.seqFile)
   output:
-    file "${params.outPrefix}"_homolog.fasta into homologousSequences
-    file "${params.outPrefix}"_repSeq.fasta into representativeSequences
+
+    file ${params.outPrefix}_homolog.fasta into homologousSequences
+    file ${params.outPrefix}_repSeq.fasta into representativeSequences
     """
     /S_get_representatives.sh --in_refSeq $refSeqFile --in_seqFile $seqF --in_geneticCode ${params.geneticCode} --in_minClustSize 10 --out_repSeq ${params.outPrefix}_repSeq.fasta --out_homologSeq ${params.outPrefix}_homolog.fasta --out_listRevComp ${params.outPrefix}_RevComSeqId.list
     """
@@ -22,7 +23,7 @@ process alignRepresentatives{
   input:
     file repSeq from  representativeSequences
   output:
-    file REF_"${params.outPrefix}"/"${params.outPrefix}"_final_align_NT.aln into refAlign
+    file REF_"${params.outPrefix}/${params.outPrefix}"_final_align_NT.aln into refAlign
     """
     /OMM_MACSE/S_OMM_MACSE_V10.02.sh --in_seq_file ${repSeq} --out_dir REF_${params.outPrefix} --out_file_prefix ${params.outPrefix} --genetic_code_number ${params.geneticCode} --alignAA_soft MAFFT --min_percent_NT_at_ends 0.2 --java_mem 2000m'
     """
