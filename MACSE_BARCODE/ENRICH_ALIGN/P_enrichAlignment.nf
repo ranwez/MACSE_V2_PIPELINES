@@ -60,7 +60,7 @@ process enrichNoIns {
           -out_NT ${seqFTrimmed.baseName}_NT.aln -out_AA ${seqFTrimmed.baseName}_AA.aln -out_tested_seq_info ${seqFTrimmed.baseName}_stats.csv
 
 
-    if [ -s ${seqFTrimmed.baseName}_NT.aln ]
+    if [ ! -s ${seqFTrimmed.baseName}_NT.aln ]
     then
       touch ${seqFTrimmed.baseName}_expNT.aln;
       touch ${seqFTrimmed.baseName}_expAA.aln;
