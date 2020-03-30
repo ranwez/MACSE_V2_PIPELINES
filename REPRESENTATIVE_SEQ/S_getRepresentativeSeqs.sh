@@ -93,7 +93,7 @@ $mmseqs easy-cluster relevant_seqAA.fasta --min-seq-id 1 -c 1 --cov-mode 1 Clust
 ##############################################################
 ## get the centroid of each large sequence cluster
 ##############################################################
-cut -f1 ClusterRes_cluster.tsv | sort | uniq -c | sort -n | awk -v N=${in_minClustSize} '{if($1>N){print $2}}' | head -$in_maxRepresentativeSeqs >representatives_id
+cut -f1 ClusterRes_cluster.tsv | sort | uniq -c | sort -n | awk -v N=${in_minClustSize} '{if($1>N){print $2}}' | tail -$in_maxRepresentativeSeqs >representatives_id
 $seqtk subseq relevant_seq.fasta representatives_id > representatives.fasta
 
 
