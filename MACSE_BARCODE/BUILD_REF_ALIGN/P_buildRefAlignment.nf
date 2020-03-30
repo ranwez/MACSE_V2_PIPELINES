@@ -40,6 +40,7 @@ process alignRepresentatives{
     file "REF_ALIGN_${params.outPrefix}/${params.outPrefix}_final_align_NT.aln" into refAlignNT
     file "REF_ALIGN_${params.outPrefix}/${params.outPrefix}_final_align_AA.aln" into refAlignAA
     """
-    /OMM_MACSE/S_OMM_MACSE_V10.02.sh --in_seq_file $refSeqFile --in_seq_lr_file ${repSeq} --out_dir REF_ALIGN_${params.outPrefix} --out_file_prefix ${params.outPrefix} --genetic_code_number ${params.geneticCode} --alignAA_soft MAFFT --min_percent_NT_at_ends 0.2 --java_mem ${params.javaMem}
+    # /OMM_MACSE/S_OMM_MACSE_V10.02.sh --in_seq_file $refSeqFile --in_seq_lr_file ${repSeq} --out_dir REF_ALIGN_${params.outPrefix} --out_file_prefix ${params.outPrefix} --genetic_code_number ${params.geneticCode} --alignAA_soft MAFFT --min_percent_NT_at_ends 0.2 --java_mem ${params.javaMem}
+    /OMM_MACSE/S_OMM_MACSE_V10.02.sh --in_seq_file $refSeqFile --in_seq_lr_file ${repSeq} --out_dir REF_ALIGN_${params.outPrefix} --out_file_prefix ${params.outPrefix} --genetic_code_number ${params.geneticCode} --alignAA_soft MAFFT --min_percent_NT_at_ends 0 --java_mem ${params.javaMem}
     """
 }
