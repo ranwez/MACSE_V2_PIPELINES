@@ -187,7 +187,7 @@ if(( $FILTERING > 0)); then
 
     printf "\n\n============== MACSE REPORT FILTERING\n"
     if (( $POST_FILTERING > 0 )); then
-      $macse -prog reportMaskAA2NT -mask_AA $  -align_AA  __${PREFIX}_homol_AA_Hmm${THRESHOLD}.fasta -align __${PREFIX}_homol_NT.aln -out_NT __${PREFIX}_final_homol_NT.aln -out_mask_detail __${PREFIX}_hmmCleaner_mask2_detail.aln -min_NT_to_keep_seq 100 -mask_AA $ -min_seq_to_keep_site 4 -min_percent_NT_at_ends ${MIN_PERCENT_NT_AT_ENDS} -dist_isolate_AA 3 -min_homology_to_keep_seq 0.3 -min_internal_homology_to_keep_seq 0.5
+      $macse -prog reportMaskAA2NT -mask_AA $  -align_AA  __${PREFIX}_homol_AA_Hmm${THRESHOLD}.fasta -align __${PREFIX}_homol_NT.aln -out_NT __${PREFIX}_final_homol_NT.aln -out_mask_detail __${PREFIX}_hmmCleaner_mask2_detail.aln -min_NT_to_keep_seq 100 -mask_AA $ -min_seq_to_keep_site -1 -min_percent_NT_at_ends ${MIN_PERCENT_NT_AT_ENDS} -dist_isolate_AA 3 -min_homology_to_keep_seq 0.3 -min_internal_homology_to_keep_seq 0.5
     else
       $macse -prog reportMaskAA2NT -mask_AA $  -align_AA  __${PREFIX}_homol_AA_Hmm${THRESHOLD}.fasta -align __${PREFIX}_homol_NT.aln -out_NT __${PREFIX}_final_homol_NT.aln -out_mask_detail __${PREFIX}_hmmCleaner_mask2_detail.aln -min_NT_to_keep_seq -1 -mask_AA $ -min_seq_to_keep_site -1 -min_percent_NT_at_ends -1 -dist_isolate_AA -1 -min_homology_to_keep_seq -1 -min_internal_homology_to_keep_seq -1 # vérifier tous les -1 sont correctement gérés par MACSE
     fi
