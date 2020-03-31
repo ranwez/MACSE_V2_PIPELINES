@@ -12,3 +12,9 @@
 ./nextflow P_enrichAlignment.nf --refAlign RESULTS_REFA_Magnoliophyta_MATK/REF_ALIGN_Magnoliophyta_MATK/Magnoliophyta_MATK_final_align_NT.aln --seqToAlign RESULTS_REFA_Magnoliophyta_MATK/Magnoliophyta_MATK_homolog.fasta --geneticCode 11 --outPrefix Magnoliophyta_MATK
 ./nextflow P_enrichAlignment.nf --refAlign RESULTS_REFA_Pinophyta_MATK/REF_ALIGN_Pinophyta_MATK/Pinophyta_MATK_final_align_NT.aln --seqToAlign RESULTS_REFA_Pinophyta_MATK/Pinophyta_MATK_homolog.fasta --geneticCode 11 --outPrefix Pinophyta_MATK
 ./nextflow P_enrichAlignment.nf --refAlign RESULTS_REFA_Formicidae_COI/REF_ALIGN_Formicidae_COI/Formicidae_COI_final_align_NT.aln --seqToAlign RESULTS_REFA_Formicidae_COI/Formicidae_COI_homolog.fasta --geneticCode 5 --outPrefix Formicidae_COI
+
+# collect RESULTS
+cp RESULTS_REFA_*/REF_ALIGN_*/*_final_align_*.aln REFERENCE_ALIGNMENTS/
+cp RESULTS_REFA_*/*RevComSeqId.list REFERENCE_ALIGNMENTS/
+cp RESULTS_ENRICH_*/*_alignAll_??.aln ../BARCODE_ALIGNMENTS/
+cp RESULTS_ENRICH_*/*enrich*.csv ../BARCODE_ALIGNMENTS/
