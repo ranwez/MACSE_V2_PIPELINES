@@ -22,7 +22,7 @@ function quit_pb_option() {
 }
 
 #handle parameters
-debug=0; in_geneticCode=2; in_minClustSize=20; in_maxRepresentativeSeqs=100;
+debug=0; in_geneticCode=2; in_minClustSize=10; in_maxRepresentativeSeqs=100;
 
 while (( $# > 0 )); do
     case "$1" in

@@ -9,10 +9,10 @@ From: ubuntu:16.04
 This container identify a subset of representative sequences homologous to a reference.
 =======================================================================================
 
-    usage (basic): representative_seqs_v01.01.sif --in_refSeq one_reference_seq.fasta --in_seqFile barcoding_sequences_to_align.fasta
-    usage (help) : representative_seqs_v01.01.sif
+    usage (basic): representative_seqs_v01.sif --in_refSeq one_reference_seq.fasta --in_seqFile barcoding_sequences_to_align.fasta
+    usage (help) : representative_seqs_v01.sif
 
-    usage (example): MACSE_barcoding_refAlign_v01.01.sif --in_refSeq Homo_sapiens_COI5P.fasta --in_seqFile  Mammalia_BOLD_COI5P.fasta
+    usage (example): MACSE_barcoding_refAlign_v01.sif --in_refSeq Homo_sapiens_COI5P.fasta --in_seqFile  Mammalia_BOLD_COI5P.fasta
 
 Three files are output. The first one contains sequences homologous to the reference one that have been found in the input file (some may have been reversed complemented if necessary). The second file contains a small subset of these sequences that capture most of their diversity. The third one contains the list of sequences that have been reverse complemented.
 
