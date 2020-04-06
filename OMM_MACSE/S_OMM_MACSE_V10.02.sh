@@ -117,7 +117,7 @@ if(( $PRE_FILTERING > 0)); then
       $macse -prog trimNonHomologousFragments $GC_OPT -seq __all_seq.fasta -out_NT __${PREFIX}_homol_tmp_NT.fasta -out_AA __${PREFIX}_homol_tmp_AA.fasta -out_trim_info __${PREFIX}_homol_fiter.csv -out_mask_detail __${PREFIX}_NonHomolFilter_NT_mask_detail.fasta -min_trim_in 60 -min_trim_ext 45 -debug
     fi
 
-    nbKeep=$(grep -c ";yes;" __${PREFIX}_homol_fiter.csv)
+    nbKeep=$(grep -c ";true$" __${PREFIX}_homol_fiter.csv)
     if(( nbKeep==0)); then
       printf "\nError: no sequence kept after the pre-filtering. This prefiltering is well adapted when your input sequence file contains many sequences (e.g > 20 sequences).\n In other cases it could be better to turn it off using the --no_prefiltering option\n" >&2
       exit 1
