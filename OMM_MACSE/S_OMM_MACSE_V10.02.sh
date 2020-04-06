@@ -15,7 +15,7 @@ printf "\n\n" # separate script message from the rest
 function quit_pb_option() {
     printf "\n\nThis script aligns sequences using: 1) MACSE pre-filtering, 2) MACSE alignment to find frameshifts, 3) MAFFT for aligning the resulting AA sequences, and 4) HMMcleaner for cleaning resulting alignments.\n"
     printf "\nyour command line is incorrect please check your options"
-    printf "\n usage example:\n$SCRIPT_NAME --out_dir out_dir --out_file_prefix PREFIX --in_seq_file seq_file.fasta [--genetic_code_number code_number] [--alignAA_soft MAFFT/MUSCLE/PRANK] ][--aligner_extra_option \"--localpair --maxiterate 1000\"] [--min_percent_NT_at_ends 0.7] [--out_detail_dir SAVE_DETAILS/] [--in_seq_lr_file less_reliable_seq_file.fasta] [--java_mem 500m] [--no_prefiltering] [--no_FS_detection] [--no_filtering] [--no_postfiltering] [--replace_FS_by_gaps] [--save_details] [--debug]\n"
+    printf "\n usage example:\n$SCRIPT_NAME --out_dir out_dir --out_file_prefix PREFIX --in_seq_file seq_file.fasta [--genetic_code_number code_number] [--alignAA_soft MAFFT/MUSCLE/PRANK] ][--aligner_extra_option \"--localpair --maxiterate 1000\"] [--min_percent_NT_at_ends 0.7] [--out_detail_dir SAVE_DETAILS/] [--in_seq_lr_file less_reliable_seq_file.fasta] [--java_mem 500m] [--no_prefiltering] [--no_FS_detection] [--no_filtering] [--no_postfiltering] [--min_seqToKeepSite] [--replace_FS_by_gaps] [--save_details] [--debug]\n"
     printf "\n\nFor further details please check the documentation on MACSE website: https://bioweb.supagro.inra.fr/macse\n\n"
     exit 1
 }
@@ -50,6 +50,7 @@ while (( $# > 0 )); do
        --no_FS_detection)            FS_DETECTION=0                                                             ; shift 1;;
        --no_filtering)               FILTERING=0                                                                ; shift 1;;
        --no_postfiltering)           POST_FILTERING=0                                                           ; shift 1;;
+       --min_seqToKeepSite)          MIN_SEQ_TO_KEEP_SITE=$(get_in_int_param "$1" "$2")                         ; shift 2;;
        --replace_FS_by_gaps)         REPLACE_FS_GAP=1                                                           ; shift 1;;
        --debug)                      debug=1                                                                    ; shift 1;;
        --save_details)               SAVE_DETAILS=1                                                             ; shift 1;;
@@ -70,6 +71,7 @@ if [ -z ${aligner_extra_option+x}  ];    then
   *) ALIGNER_EXTRA_OPTION=""
   esac
 fi
+
 
 # check that mandatory parameters are set
 # https://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash
@@ -111,6 +113,11 @@ if(( $PRE_FILTERING > 0)); then
         __${PREFIX}_homol_tmp_NT_all.fasta
         for s in $(grep ">" $IN_SEQ_FILE); do grep -A1 -e"$s$" __${PREFIX}_homol_tmp_NT_all.fasta; done >  __${PREFIX}_homol_tmp_NT.fasta
         for s in $(grep ">" $IN_SEQ_LR_FILE); do grep -A1 -e"$s$" __${PREFIX}_homol_tmp_NT_all.fasta; done >  __${PREFIX}_homol_tmp_NT_lr.fasta
+        nbKeep=$(grep -c ";yes;" __${PREFIX}_homol_fiter.csv)
+        if(( nbKeep==0)); then
+          printf "No sequence kept after the pre-filtering. This prefiltering is only adapted when your input sequence file contains at least 20 sequences.\n In other cases it could be better to turn it off using the --no_prefiltering option\n"
+          exit 1
+        fi
     else
       $macse -prog trimNonHomologousFragments $GC_OPT -seq __all_seq.fasta -out_NT __${PREFIX}_homol_tmp_NT.fasta -out_AA __${PREFIX}_homol_tmp_AA.fasta -out_trim_info __${PREFIX}_homol_fiter.csv -out_mask_detail __${PREFIX}_NonHomolFilter_NT_mask_detail.fasta -min_trim_in 60 -min_trim_ext 45 -debug
     fi
@@ -187,9 +194,9 @@ if(( $FILTERING > 0)); then
 
     printf "\n\n============== MACSE REPORT FILTERING\n"
     if (( $POST_FILTERING > 0 )); then
-      $macse -prog reportMaskAA2NT -mask_AA $  -align_AA  __${PREFIX}_homol_AA_Hmm${THRESHOLD}.fasta -align __${PREFIX}_homol_NT.aln -out_NT __${PREFIX}_final_homol_NT.aln -out_mask_detail __${PREFIX}_hmmCleaner_mask2_detail.aln -min_NT_to_keep_seq 100 -mask_AA $ -min_seq_to_keep_site -1 -min_percent_NT_at_ends ${MIN_PERCENT_NT_AT_ENDS} -dist_isolate_AA 3 -min_homology_to_keep_seq 0.3 -min_internal_homology_to_keep_seq 0.5
+      $macse -prog reportMaskAA2NT -mask_AA $  -align_AA  __${PREFIX}_homol_AA_Hmm${THRESHOLD}.fasta -align __${PREFIX}_homol_NT.aln -out_NT __${PREFIX}_final_homol_NT.aln -out_mask_detail __${PREFIX}_hmmCleaner_mask2_detail.aln -min_NT_to_keep_seq 100 -mask_AA $ -min_seq_to_keep_site $MIN_SEQ_TO_KEEP_SITE -min_percent_NT_at_ends ${MIN_PERCENT_NT_AT_ENDS} -dist_isolate_AA 3 -min_homology_to_keep_seq 0.3 -min_internal_homology_to_keep_seq 0.5
     else
-      $macse -prog reportMaskAA2NT -mask_AA $  -align_AA  __${PREFIX}_homol_AA_Hmm${THRESHOLD}.fasta -align __${PREFIX}_homol_NT.aln -out_NT __${PREFIX}_final_homol_NT.aln -out_mask_detail __${PREFIX}_hmmCleaner_mask2_detail.aln -min_NT_to_keep_seq -1 -mask_AA $ -min_seq_to_keep_site -1 -min_percent_NT_at_ends -1 -dist_isolate_AA -1 -min_homology_to_keep_seq -1 -min_internal_homology_to_keep_seq -1 # vérifier tous les -1 sont correctement gérés par MACSE
+      $macse -prog reportMaskAA2NT -mask_AA $  -align_AA  __${PREFIX}_homol_AA_Hmm${THRESHOLD}.fasta -align __${PREFIX}_homol_NT.aln -out_NT __${PREFIX}_final_homol_NT.aln -out_mask_detail __${PREFIX}_hmmCleaner_mask2_detail.aln -min_NT_to_keep_seq -1 -mask_AA $ -min_seq_to_keep_site $MIN_SEQ_TO_KEEP_SITE -min_percent_NT_at_ends -1 -dist_isolate_AA -1 -min_homology_to_keep_seq -1 -min_internal_homology_to_keep_seq -1 # vérifier tous les -1 sont correctement gérés par MACSE
     fi
 
     printf "\n\n============== MACSE TRANSLATE\n"
