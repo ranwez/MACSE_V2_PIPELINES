@@ -1,6 +1,7 @@
 
 # build reference alignments lancé avec --in_minClustSize 10
-./nextflow P_buildRefAlignment.nf --refSeq Mammalia/Homo_sapiens_NC_012920_COI-5P_ref.fasta --seqToAlign Mammalia/Mammalia_BOLD_117156seq_COI-5P_2020.fasta --geneticCode 2 --outPrefix Mammalia_COI
+#./nextflow P_buildRefAlignment.nf --refSeq Mammalia/Homo_sapiens_NC_012920_COI-5P_ref.fasta --seqToAlign Mammalia/Mammalia_BOLD_117156seq_COI-5P_2020.fasta --geneticCode 2 --outPrefix Mammalia_COI
+./nextflow P_buildRefAlignment.nf --refSeq Mammalia/Homo_sapiens_NC_012920_COI_ref.fasta --seqToAlign Mammalia/Mammalia_BOLD_121180seq_COI.fasta --geneticCode 2 --outPrefix Mammalia_COI
 ./nextflow P_buildRefAlignment.nf --refSeq Magnoliophyta/Magnolia_officinalis_rbcL_ref.fasta --seqToAlign Magnoliophyta//Magnoliophyta_BOLD_rbcL_121989seqs.fasta --geneticCode 11 --outPrefix Magnoliophyta_RBCL
 ./nextflow P_buildRefAlignment.nf --refSeq Magnoliophyta/Magnolia_officinalis_NC_020316.1_matK_ref.fasta --seqToAlign Magnoliophyta/Magnoliophyta_BOLD_matK_107413seqs.fasta --geneticCode 11 --outPrefix Magnoliophyta_MATK
 ./nextflow P_buildRefAlignment.nf --refSeq Pinophyta/Pinus_sylvestris_NC_035069.1_matK_ref.fasta --seqToAlign Pinophyta/Pinophyta_BOLD_matK_2102seqs.fasta --geneticCode 11 --outPrefix Pinophyta_MATK
