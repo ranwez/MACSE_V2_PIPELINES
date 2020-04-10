@@ -74,8 +74,8 @@ java -jar -Xmx800m $macse -prog translateNT2AA -gc_def $in_geneticCode -seq $in_
 cp $in_seqFile __seqs.fasta
 $mmseqs easy-search __seqs.fasta ref_seq_AA.fasta  res_search.tsv TMP --search-type 2 --translation-table $in_geneticCode --split-memory-limit 70G --format-output "query,qaln,qstart,qend,qcov"
 
-awk '{if($5>0.5 && $4>$3) print $1}' res_search.tsv | sort -u > relevant_dir_id
-awk '{if($5>0.5 && $3>$4) print $1}' res_search.tsv | sort -u > relevant_rev_id
+awk '{if($5>0.5 && $4>$3) print $1}' res_search.tsv | sort -T $tmp_dir -u > relevant_dir_id
+awk '{if($5>0.5 && $3>$4) print $1}' res_search.tsv | sort -T $tmp_dir -u > relevant_rev_id
 
 $seqtk subseq $in_seqFile relevant_dir_id > relevant_dir.fasta
 $seqtk subseq $in_seqFile relevant_rev_id > relevant_rev_tmp.fasta
@@ -93,7 +93,7 @@ $mmseqs easy-cluster relevant_seqAA.fasta --min-seq-id 1 -c 1 --cov-mode 1 Clust
 ##############################################################
 ## get the centroid of each large sequence cluster
 ##############################################################
-cut -f1 ClusterRes_cluster.tsv | sort | uniq -c | sort -n | awk -v N=${in_minClustSize} '{if($1>N){print $2}}' | tail -$in_maxRepresentativeSeqs >representatives_id
+cut -f1 ClusterRes_cluster.tsv | sort -T $tmp_dir| uniq -c | sort -T $tmp_dir-n | awk -v N=${in_minClustSize} '{if($1>N){print $2}}' | tail -$in_maxRepresentativeSeqs >representatives_id
 $seqtk subseq relevant_seq.fasta representatives_id > representatives.fasta
 
 
