@@ -33,8 +33,8 @@ if( help == true)
   println """\
 
     usage: nextflow P_buildRefAlignment.nf --refSeq ref_seq_NT.fasta --seqToAlign barcding_seqs_NT.fasta --geneticCode genetic_code_number --outPrefix PREFIX [--javaMem memoryToAllocate] [--minClustSize 10][--maxRepresentativeSeqs 100]
-    usage example 1: nextflow P_buildRefAlignment.nf  --refSeq Homo_sapiens_NC_012920_COI_ref.fasta --seqToAlign Mammalia_BOLD_121180seq_COI.fasta --outPrefix Mammals_COI_2 --geneticCode 2
-    usage example 2: nextflow P_buildRefAlignment.nf  --refSeq Homo_sapiens_NC_012920_COI_ref.fasta --seqToAlign Mammalia_BOLD_121180seq_COI.fasta --outPrefix Mammals_COI_2 --geneticCode 2 --javaMem 4000m --minClustSize 10 --maxRepresentativeSeqs 100
+    usage example 1: nextflow P_buildRefAlignment.nf  --refSeq Homo_sapiens_NC_012920_COI_ref.fasta --seqToAlign Mammalia_BOLD_121180seq_COI.fasta --outPrefix Mammals_COI --geneticCode 2
+    usage example 2: nextflow P_buildRefAlignment.nf  --refSeq Homo_sapiens_NC_012920_COI_ref.fasta --seqToAlign Mammalia_BOLD_121180seq_COI.fasta --outPrefix Mammals_COI --geneticCode 2 --javaMem 4000m --minClustSize 10 --maxRepresentativeSeqs 100
 
     For more details please see our book chapter, the MACSE website (https://bioweb.supagro.inra.fr/) or our github repository (https://github.com/ranwez/MACSE_V2_PIPELINES/tree/master/MACSE_BARCODE).
 
