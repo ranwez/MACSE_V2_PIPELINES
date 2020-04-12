@@ -15,7 +15,7 @@ resultdir.with {
 
 process getRepresentatives{
 
-  publishDir "$resultdir"
+  publishDir "$resultdir", mode: 'copy'
 
   input:
     file seqF from file(params.seqToAlign)
@@ -26,15 +26,15 @@ process getRepresentatives{
     file "${params.outPrefix}_RevComSeqId.list"
     """
     /S_getRepresentativeSeqs.sh --in_refSeq $refSeqFile --in_seqFile $seqF --in_minClustSize 20 --in_geneticCode ${params.geneticCode} --out_repSeq ${params.outPrefix}_repSeq.fasta --out_homologSeq ${params.outPrefix}_homolog.fasta --out_listRevComp ${params.outPrefix}_RevComSeqId.list
-    # for test
-    head -200 ${params.outPrefix}_homolog.fasta > ${params.outPrefix}_homolog_200.fasta
-    mv ${params.outPrefix}_homolog_200.fasta ${params.outPrefix}_homolog.fasta
+    # for testing get only a small subset of sequences to align
+    #head -200 ${params.outPrefix}_homolog.fasta > ${params.outPrefix}_homolog_200.fasta
+    #mv ${params.outPrefix}_homolog_200.fasta ${params.outPrefix}_homolog.fasta
     """
 }
 
 process alignRepresentatives{
 
-  publishDir "$resultdir"
+  publishDir "$resultdir", mode: 'copy'
 
   input:
     file repSeq from  representativeSequences
