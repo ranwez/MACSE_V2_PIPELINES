@@ -14,7 +14,7 @@ These two pipelines are described in our [[MACSE tutorial paper]](#ranwez_2020_t
 * **macse_barcode** this nextflow pipeline allows to aligns hundred of thousands of barcoding sequences
 * **build_ref_align** this nextflow pipeline identifies a small subset of sequences that are representative of the diversity of the barcoding input sequence dataset
 * **enrich_align** this nextflow pipeline aligns barcoding sequences based on a reference alignment.
-* **representative_sequences** A bash script that identifies a small subset of sequences that are representative of the diversity of the barcoding input sequence dataset and is the core of **build_ref_align**.
+* **representative_sequences** A bash script that identifies a small subset of sequences that are representative of the diversity of the barcoding input sequence dataset and is chained with OMM_MACSE in the **build_ref_align** workflow.
 
 
 These pipelines are detailed in our [[book chapter dedicated to MACSE and barcoding datasets]](#delsuc_2020). While using **macse_barcode** is the easiest solution, chaining **build_ref_align** and **enrich_align** allows to check the quality of the proposed reference alignment and to manually curate it, if needed, before using it to align the barcode sequences.
