@@ -30,4 +30,4 @@ Nextflow [[Di Tommaso, 2017]](#Di_Tommaso_2017) enables scalable and reproducibl
 
 Nextflow separates the workflow itself from the directive regarding the correct way to execute it in the environment. One key advantage of Nextflow is that, by changing slightly the “nextflow.config” file, the same workflow will be parallelized and launched to exploit the full resources of a high performance computing (HPC) cluster.
 
-<a id="Di_Tommaso_2017"></a> Di Tommaso, P., Chatzou, M., Floden, E. W., Barja, P. P., Palumbo, E., and Notredame, C.(2017). Nextflow enables reproducible computational workflows.Nature Biotechnology,35(4):316–319. [web site](https://www.nextflow.io/)
+<a id="Di_Tommaso_2017">[-]</a> Di Tommaso, P., Chatzou, M., Floden, E. W., Barja, P. P., Palumbo, E., and Notredame, C.(2017). Nextflow enables reproducible computational workflows.Nature Biotechnology,35(4):316–319. [web site](https://www.nextflow.io/)
