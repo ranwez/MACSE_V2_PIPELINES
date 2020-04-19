@@ -55,7 +55,7 @@ Nextflow separates the workflow itself from the directive regarding the correct 
 
 <a id="Ranwez_2011"></a>MACSE: Multiple Alignment of Coding SEquences accounting for frameshifts and stop codons.
 Vincent Ranwez, Sébastien Harispe, Frédéric Delsuc, Emmanuel JP Douzery
-PLoS One 2011, 6(9): e22594.
+PLoS One 2011, 6(9): e22594. [MACSE web site](https://bioweb.supagro.inra.fr/macse/i)
 
 <a id="ranwez_2020_tuto"></a> Aligning protein-coding nucleotide sequences with MACSE. V. Ranwez, N. Chantret, F Delsuc. To appear in Methods in Molecular Biology (2020).
 
