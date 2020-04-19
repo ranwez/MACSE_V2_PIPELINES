@@ -26,7 +26,7 @@ A brief introduction to singularity is available [here](https://bioweb.supagro.i
 
 ## Nextflow overview
 
-[Nextflow](https://www.nextflow.io/)[#Di_Tommaso_2017] enables scalable and reproducible scientific workflowsusing software containers allowing the adaptation of pipelines written in the most commonscripting languages.
+[#Di_Tommaso_2017][Nextflow](https://www.nextflow.io/) enables scalable and reproducible scientific workflowsusing software containers allowing the adaptation of pipelines written in the most commonscripting languages.
 
 Nextflow separates the workflow itself from the directive regarding the correct way to execute it in the environment. One key advantage of Nextflow is that, by changing slightly the “nextflow.config” file, the same workflow will be parallelized and launched to exploit the full resources of a high performance computing (HPC) cluster.
 
