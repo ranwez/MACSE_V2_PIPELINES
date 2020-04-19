@@ -18,7 +18,8 @@ These two pipelines are described in our [[MACSE tutorial paper]](#ranwez_2020_t
 
 
 These pipelines are detailed in our [[book chapter dedicated to MACSE and barcoding datasets]](#delsuc_2020). While using **macse_barcode** is the easiest solution, chaining **build_ref_align** and **enrich_align** allows to check the quality of the proposed reference alignment and to manually curate it, if needed, before using it to align the barcode sequences.
-We use **macse_barcode** pipelines to align **COI**, **matK** and **rbcL** marker for different taxonomic group, all resulting alignments are available [here](https://bioweb.supagro.inra.fr/macse/index.php?menu=download_Barcoding).
+
+We used the **macse_barcode** pipeline to align **COI**, **matK** and **rbcL** sequences for numerous taxonomic groups, all resulting alignments are available [here](https://bioweb.supagro.inra.fr/macse/index.php?menu=download_Barcoding).
 
 ## MACSE overview
 
@@ -38,7 +39,7 @@ More information (including documentations and tutorials) are available on the [
 
 ## Singularity overview
 
-A singularity container [[Kurtzer_2017]](#Kurtzer_2017) contains everything that is needed to execute a specific task. The person building the container has to handle dependencies and environment configuration so that the end-user do not need to bother. The file specifying the construction of the container is a simple text file called a recipe (we provide the recipe of our container as well as the containers). As our scripts/pipelines often relies on several other scripts and external tools (e.g. MAFFT) singularity container is very handy as the end user just need to install singularity and download the container without having to care for installing dependencies or setting environment variables.
+A singularity container [[Kurtzer, 2017]](#Kurtzer_2017) contains everything that is needed to execute a specific task. The person building the container has to handle dependencies and environment configuration so that the end-user do not need to bother. The file specifying the construction of the container is a simple text file called a recipe (we provide the recipe of our container as well as the containers). As our scripts/pipelines often relies on several other scripts and external tools (e.g. MAFFT) singularity container is very handy as the end user just need to install singularity and download the container without having to care for installing dependencies or setting environment variables.
 
 A brief introduction to singularity is available [here](https://bioweb.supagro.inra.fr/macse/index.php?menu=pipelines).
 
