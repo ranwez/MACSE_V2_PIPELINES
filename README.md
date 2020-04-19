@@ -8,7 +8,7 @@ This repository provides source code for several pipelines dedicated to the alig
 * **alfix**: this pipeline uses MACSE and HmmCleaner to produce a high quality alignment of nucleotide (NT) coding sequences using their amino acid (AA) translations. It is well suited for datasets containing a few dozen of sequences of a few Kb.
 *  **OMM_MACSE**: this pipeline also produces a codon-aware alignment thanks to MACSE, which could be filtered by HmmCleaner, but it can handle larger datasets by relying on MAFFT, MUSCLE or PRANK to scale up.
 
-These two pipelines are described in our [[MACSE tutorial paper]](#ranwez_2020_tuto)
+These two pipelines are described in our MACSE tutorial paper [[ranwez et al. 2020]](#ranwez_2020_tuto)
 
 ### pipelines dedicated to barcoding
 * **macse_barcode** this nextflow pipeline allows to aligns hundred of thousands of barcoding sequences
@@ -17,7 +17,7 @@ These two pipelines are described in our [[MACSE tutorial paper]](#ranwez_2020_t
 * **representative_sequences** A bash script that identifies a small subset of sequences that are representative of the diversity of the barcoding input sequence dataset and is chained with OMM_MACSE in the **build_ref_align** workflow.
 
 
-These pipelines are detailed in our [[book chapter dedicated to MACSE and barcoding datasets]](#delsuc_2020). While using **macse_barcode** is the easiest solution, chaining **build_ref_align** and **enrich_align** allows to check the quality of the proposed reference alignment and to manually curate it, if needed, before using it to align the barcode sequences.
+These pipelines are detailed in our book chapter dedicated to MACSE and barcoding datasets [[Delscuc & Ranwez, 2020]](#delsuc_2020). While using **macse_barcode** is the easiest solution, chaining **build_ref_align** and **enrich_align** allows to check the quality of the proposed reference alignment and to manually curate it, if needed, before using it to align the barcode sequences.
 
 We used the **macse_barcode** pipeline to align **COI**, **matK** and **rbcL** sequences for numerous taxonomic groups, all resulting alignments are available [here](https://bioweb.supagro.inra.fr/macse/index.php?menu=download_Barcoding).
 
@@ -27,7 +27,7 @@ MACSE: Multiple Alignment of Coding SEquences Accounting for Frameshifts and Sto
 
 A wide range of molecular analyses relies on multiple sequence alignments (MSA). Until now the most efficient solution to align nucleotide (NT) sequences containing open reading frames was to use indirect procedures that align amino acid (AA) translation before reporting the inferred gap positions at the codon level. There are two important pitfalls with this approach. Firstly, any premature stop codon impedes using such a strategy. Secondly, each sequence is translated with the same reading frame from beginning to end, so that the presence of a single additional nucleotide leads to both aberrant translation and alignment.
 
-[[MACSE]](#Ranwez_2011) aligns coding NT sequences with respect to their AA translation while allowing NT sequences to contain multiple frameshifts and/or stop codons. MACSE is hence the first automatic solution to align protein-coding gene datasets containing non-functional sequences (pseudogenes) without disrupting the underlying codon structure. It has also proved useful in detecting undocumented frameshifts in public database sequences and in aligning next-generation sequencing reads/contigs against a reference coding sequence.
+MACSE [[Ranwez et al, 2011]](#Ranwez_2011) aligns coding NT sequences with respect to their AA translation while allowing NT sequences to contain multiple frameshifts and/or stop codons. MACSE is hence the first automatic solution to align protein-coding gene datasets containing non-functional sequences (pseudogenes) without disrupting the underlying codon structure. It has also proved useful in detecting undocumented frameshifts in public database sequences and in aligning next-generation sequencing reads/contigs against a reference coding sequence.
 
 For further details about the underlying algorithm see the original publication:
 MACSE: Multiple Alignment of Coding SEquences accounting for frameshifts and stop codons.
