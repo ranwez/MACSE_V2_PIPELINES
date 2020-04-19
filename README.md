@@ -2,7 +2,7 @@
 
 This repository provides source code for several pipelines dedicated to the alignment of nucleotide coding sequences that are based on MACSE. These pipelines are mostly bash scripts encapsulated within singularity containers and sometimes combined in nextflow workflows.
 
-## Pipelines overview
+## Pipeline overview
 
 ### pipelines to align CDS/exons
 * **alfix**: this pipeline uses MACSE and HmmCleaner to produce a high quality alignment of nucleotide (NT) coding sequences using their amino acid (AA) translations. It is well suited for datasets containing a few dozen of sequences of a few Kb.
