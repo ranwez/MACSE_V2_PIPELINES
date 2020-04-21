@@ -1,6 +1,6 @@
 # MACSE pipelines
 
-This repository provides source code for several pipelines dedicated to the alignment of nucleotide coding sequences that are based on MACSE. These pipelines are mostly bash scripts encapsulated within singularity containers and sometimes combined in nextflow workflows.
+This repository provides source code for several pipelines dedicated to the alignment of nucleotide coding sequences that are based on MACSE. These pipelines are mostly bash scripts encapsulated within Singularity containers and sometimes combined into NextFlow workflows.
 
 ## Pipeline overview
 
@@ -50,9 +50,9 @@ Nextflow [[Di Tommaso, 2017]](#Di_Tommaso_2017) enables scalable and reproducibl
 Nextflow separates the workflow itself from the directive regarding the correct way to execute it in the environment. One key advantage of Nextflow is that, by changing slightly the “nextflow.config” file, the same workflow will be parallelized and launched to exploit the full resources of a high performance computing (HPC) cluster.
 
 ## References
-<a id="Di_Tommaso_2017"></a> Di Tommaso, P., Chatzou, M., Floden, E. W., Barja, P. P., Palumbo, E., and Notredame, C.(2017). Nextflow enables reproducible computational workflows.Nature Biotechnology,35(4):316–319. [Nextflow web site](https://www.nextflow.io/)
+<a id="Di_Tommaso_2017"></a> Di Tommaso, P., Chatzou, M., Floden, E. W., Barja, P. P., Palumbo, E., and Notredame, C.(2017). Nextflow enables reproducible computational workflows. Nature Biotechnology,35(4):316–319. [Nextflow web site](https://www.nextflow.io/)
 
-<a id="Kurtzer_2017"></a> Kurtzer, G. M., Sochat, V., and Bauer, M. W. (2017). Singularity: Scientific containers formobility of compute.PloS One, 12(5):e0177459. [singularity web site](https://sylabs.io/)
+<a id="Kurtzer_2017"></a> Kurtzer, G. M., Sochat, V., and Bauer, M. W. (2017). Singularity: Scientific containers formobility of compute. PloS One, 12(5):e0177459. [singularity web site](https://sylabs.io/)
 
 <a id="Ranwez_2011"></a>MACSE: Multiple Alignment of Coding SEquences accounting for frameshifts and stop codons.
 Vincent Ranwez, Sébastien Harispe, Frédéric Delsuc, Emmanuel JP Douzery
