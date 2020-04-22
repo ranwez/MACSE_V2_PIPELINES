@@ -57,6 +57,7 @@ ENV LG_HMMCLEANER="/UTILS/HMMcleanerV1_8_VR2/HMMcleanAA_VR.pl "
 
 ENTRYPOINT ["/OMM_MACSE/S_OMM_MACSE_V10.02.sh"]
 
+# Docker version 19.03.8 IFB biosphere (using https://biosphere.france-bioinformatique.fr/catalogue/appliance/119/)
 # build and test
 #docker build -f OMM_MACSE_V100.02_docker.def -t omm_macse_v10.02
 #docker run -v $HOME:$HOME -w $PWD omm_macse_v10.02 --out_dir RES --out_file_prefix res --in_seq_file ./LOC_48720_NT.fasta
