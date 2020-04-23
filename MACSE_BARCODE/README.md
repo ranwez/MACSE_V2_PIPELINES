@@ -39,7 +39,7 @@ singularity pull --arch amd64 library://vranwez/default/omm_macse:v10.02
 
 ### Getting the required Nextflow workflows
 The three Nexflow workflows are small text files available here:
-[P_buildRefAlignment.nf](https://raw.githubusercontent.com/ranwez/MACSE_V2_PIPELINES/master/MACSE_BARCODE/BUILD_REF_ALIGN/P_buildRefAlignment.nf) [P_enrichAlignment.nf](https://raw.githubusercontent.com/ranwez/MACSE_V2_PIPELINES/master/MACSE_BARCODE/ENRICH_ALIGN/P_enrichAlignment.nf).
+[P_buildRefAlignment.nf](https://raw.githubusercontent.com/ranwez/MACSE_V2_PIPELINES/master/MACSE_BARCODE/BUILD_REF_ALIGN/P_buildRefAlignment.nf),  [P_enrichAlignment.nf](https://raw.githubusercontent.com/ranwez/MACSE_V2_PIPELINES/master/MACSE_BARCODE/ENRICH_ALIGN/P_enrichAlignment.nf), 
 [P_macse_barcode.nf](https://raw.githubusercontent.com/ranwez/MACSE_V2_PIPELINES/master/MACSE_BARCODE/P_macse_barcode.nf).
 
 ### Adjusting the Nextflow config file
