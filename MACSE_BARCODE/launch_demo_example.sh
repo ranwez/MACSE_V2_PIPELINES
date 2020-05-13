@@ -24,6 +24,17 @@ cp RESULTS_ENRICH_*/*enrich*.csv ../BARCODE_ALIGNMENTS/
 
 # Temps de calculus indicatifs pour COI Mammalia
 
+Completed at: 08-avr.-2020 13:29:46
+Duration    : 11m 16s
+CPU hours   : 0.2
+Succeeded   : 2
+
+Completed at: 08-avr.-2020 15:10:35
+Duration    : 1h 38m 49s
+CPU hours   : 135.1
+Succeeded   : 2'355
+
+
 Completed at: 31-mars-2020 11:19:58
 Duration    : 7m 21s
 CPU hours   : 0.1
