@@ -180,7 +180,7 @@ case $ALIGN_SOFT in
 esac
 set +x
 # get the NT and AA alignment with * and !
-$macse -prog reportGapsAA2NT -align_AA  __${PREFIX}_homol_AA.aln -seq __${PREFIX}_homol_NT.fasta -out_NT __${PREFIX}_homol_NT.aln
+$macse -prog reportGapsAA2NT $GC_OPT -align_AA  __${PREFIX}_homol_AA.aln -seq __${PREFIX}_homol_NT.fasta -out_NT __${PREFIX}_homol_NT.aln
 cp __${PREFIX}_homol_NT.aln __${PREFIX}_unmask_NT.aln
 $macse -prog translateNT2AA $GC_OPT -seq __${PREFIX}_unmask_NT.aln -out_AA __${PREFIX}_unmask_AA.aln -keep_final_stop_ON
 
