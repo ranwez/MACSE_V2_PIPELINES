@@ -43,6 +43,11 @@ A singularity container [[Kurtzer, 2017]](#Kurtzer_2017) contains everything tha
 
 A brief introduction to singularity is available [here](https://bioweb.supagro.inra.fr/macse/index.php?menu=pipelines).
 
+If you got an error message stating that your input file does not exist it is probably related to the fact that the folder containing them is not visible from the singularity container. A solution found by one user is to use the [SINGULARITY_BINDPATH variable](https://sylabs.io/guides/3.0/user-guide/bind_paths_and_mounts.html):   
+```
+export SINGULARITY_BINDPATH="/path/to/fasta"
+```
+
 ## Nextflow overview
 
 Nextflow [[Di Tommaso, 2017]](#Di_Tommaso_2017) enables scalable and reproducible scientific workflowsusing software containers allowing the adaptation of pipelines written in the most commonscripting languages.
