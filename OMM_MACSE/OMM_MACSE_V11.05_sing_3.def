@@ -6,13 +6,13 @@ From: ubuntu:16.04
 %help
 
 
-This container launches the OMM_MACSE pipeline used to buid the OrthoMaM Database (V10).
+This container launches the OMM_MACSE pipeline used to buid the OrthoMaM Database (V11).
 =======================================================================================
 
-    usage (basic): OMM_MACSE_v10.01.sif --out_dir out_dir --out_file_prefix out_file_prefix --in_seq_file nucleotide_coding_sequences_to_align.fasta
-    usage (help) : OMM_MACSE_v10.01.sif
+    usage (basic): OMM_MACSE_v11.05.sif --out_dir out_dir --out_file_prefix out_file_prefix --in_seq_file nucleotide_coding_sequences_to_align.fasta
+    usage (help) : OMM_MACSE_v11.05.sif
 
-    usage (example): OMM_MACSE_v10.01.sif --in_seq_file LOC_48720.fasta --out_dir RES_LOC_48720 --out_file_prefix LOC_48720
+    usage (example): OMM_MACSE_v11.05.sif --in_seq_file LOC_48720.fasta --out_dir RES_LOC_48720 --out_file_prefix LOC_48720
 
 For more details please see the pipeline documentation pages on the MACSE website:
 ==================================================================================
@@ -75,7 +75,7 @@ HMMCleaner V1_8_VR2 (default)
   rm -rf /var/lib/apt/lists/*
 
 		svn checkout https://github.com/ranwez/MACSE_V2_PIPELINES/trunk/OMM_MACSE
-    rm -rf /OMM_MACSE/V*_FREEZED; /UTILS/macse_v2.03.jar
+    rm -rf /OMM_MACSE/V*_FREEZED; rm -rf /UTILS/macse_v2.03.jar
 		svn checkout https://github.com/ranwez/MACSE_V2_PIPELINES/trunk/UTILS
 
     chmod 755 /OMM_MACSE/*.sh
