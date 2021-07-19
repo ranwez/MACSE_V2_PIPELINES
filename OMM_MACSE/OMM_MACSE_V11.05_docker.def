@@ -32,7 +32,7 @@ RUN		svn checkout https://github.com/ranwez/MACSE_V2_PIPELINES/trunk/UTILS
 
 ## clean
 RUN  rm -rf /var/lib/apt/lists/*
-
+RUN  rm -rf /OMM_MACSE/V*_FREEZED; rm -rf /UTILS/macse_v2.03.jar
 
 ## set execution rights
 RUN    chmod 755 /OMM_MACSE/*.sh
@@ -51,18 +51,18 @@ ENV LG_UTILS_PATH="/UTILS"
 ENV LG_MAFFT="mafft"
 ENV LG_MUSCLE="muscle"
 ENV LG_PRANK="/prank/bin/prank"
-ENV LG_MACSE="/UTILS/macse_v2.03.jar"
+ENV LG_MACSE="/UTILS/macse_v2.05.jar"
 ENV LG_HMMCLEANER="/UTILS/HMMcleanerV1_8_VR2/HMMcleanAA_VR.pl "
 
 
-ENTRYPOINT ["/OMM_MACSE/S_OMM_MACSE_V10.02.sh"]
+ENTRYPOINT ["/OMM_MACSE/S_OMM_MACSE_V11.05.sh"]
 
 # Docker version 19.03.8 IFB biosphere (using https://biosphere.france-bioinformatique.fr/catalogue/appliance/119/)
 # build and test
-#docker build -f OMM_MACSE_V100.02_docker.def -t omm_macse_v10.02
-#docker run -v $HOME:$HOME -w $PWD omm_macse_v10.02 --out_dir RES --out_file_prefix res --in_seq_file ./LOC_48720_NT.fasta
+#docker build -f OMM_MACSE_V11.05_docker.def -t omm_macse_v11.05
+#docker run -v $HOME:$HOME -w $PWD omm_macse_v11.05 --out_dir RES --out_file_prefix res --in_seq_file ./LOC_48720_NT.fasta
 
 #publish on github
-# docker tag omm_macse_v10.02 ranwez/omm_macse:v10.02
+# docker tag omm_macse_v11.05 ranwez/omm_macse:v11.05
 # docker login
-#  docker push ranwez/omm_macse:v10.02
+#  docker push ranwez/omm_macse:v11.05
