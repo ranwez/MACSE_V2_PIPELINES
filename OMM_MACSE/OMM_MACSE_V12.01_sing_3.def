@@ -75,7 +75,7 @@ HMMCleaner V1_8_VR2 (default)
   rm -rf /var/lib/apt/lists/*
 
 		svn checkout https://github.com/ranwez/MACSE_V2_PIPELINES/trunk/OMM_MACSE
-    rm -rf /OMM_MACSE/V*_FREEZED; rm -rf /UTILS/macse_v2.03.jar
+    rm -rf /OMM_MACSE/V*_FREEZED; rm -rf /UTILS/macse_v2.03.jar; rm -rf /UTILS/macse_v2.05.jar
 		svn checkout https://github.com/ranwez/MACSE_V2_PIPELINES/trunk/UTILS
 
     chmod 755 /OMM_MACSE/*.sh
@@ -97,13 +97,13 @@ HMMCleaner V1_8_VR2 (default)
     export LG_MAFFT="mafft"
     export LG_MUSCLE="muscle"
     export LG_PRANK="/prank/bin/prank"
-    export LG_MACSE="/UTILS/macse_v2.05.jar"
+    export LG_MACSE="/UTILS/macse_v2.07.jar"
     export LG_HMMCLEANER="/UTILS/HMMcleanerV1_8_VR2/HMMcleanAA_VR.pl "
 
 
 
 %runscript
-    exec bash /OMM_MACSE/S_OMM_MACSE_v12.01.sh "$@"
+    exec bash /OMM_MACSE/S_OMM_MACSE_V12.01.sh "$@"
 
 %files
 
