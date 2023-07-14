@@ -144,8 +144,8 @@ if(( FS_DETECTION > 0 )); then
   printf "\n\n============== MACSE FRAMESHIFT DETECTION\n"
   SEQ_LR_OPT="";
   if [ -s "__${PREFIX}_homol_tmp_NT_lr.fasta" ]; then SEQ_LR_OPT="-seq_lr __${PREFIX}_homol_tmp_NT_lr.fasta"; fi
-  echo "$macse -prog alignSequences $GC_OPT -seq __${PREFIX}_homol_tmp_NT.fasta  $SEQ_LR_OPT -optim 2 -max_refine_iter 3 -local_realign_init 0.2 -out_NT __${PREFIX}_homol_tmp_NT.aln -out_AA __${PREFIX}_homol_tmp_AA.aln"
-  $macse -prog alignSequences $GC_OPT -seq __${PREFIX}_homol_tmp_NT.fasta $SEQ_LR_OPT -optim 2 -max_refine_iter 3 -local_realign_init 0.2 -out_NT __${PREFIX}_homol_tmp_NT.aln -out_AA __${PREFIX}_homol_tmp_AA.aln
+  echo "$macse -prog alignSequences $GC_OPT $MIN_MEM_OPT -seq __${PREFIX}_homol_tmp_NT.fasta  $SEQ_LR_OPT -optim 2 -max_refine_iter 3 -local_realign_init 0.2 -out_NT __${PREFIX}_homol_tmp_NT.aln -out_AA __${PREFIX}_homol_tmp_AA.aln"
+  $macse -prog alignSequences $GC_OPT $MIN_MEM_OPT -seq __${PREFIX}_homol_tmp_NT.fasta $SEQ_LR_OPT -optim 2 -max_refine_iter 3 -local_realign_init 0.2 -out_NT __${PREFIX}_homol_tmp_NT.aln -out_AA __${PREFIX}_homol_tmp_AA.aln
 
   #check if it is fine or not
   if [ ! -f __${PREFIX}_homol_tmp_NT.aln ] ; then

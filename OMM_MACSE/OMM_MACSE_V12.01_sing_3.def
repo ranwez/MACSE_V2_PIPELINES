@@ -27,7 +27,7 @@ OrthoMam v10 (the paper describing this pipeline)
 
     --------------------------------------
 
-MACSE V2.05 (extensively used in this pipeline)
+MACSE V2.08 (extensively used in this pipeline)
     Vincent Ranwez, Emmanuel J P Douzery, Cédric Cambon, Nathalie Chantret, Frédéric Delsuc, MACSE v2: Toolkit for the Alignment of Coding Sequences Accounting for Frameshifts and Stop Codons, Molecular Biology and Evolution, Volume 35, Issue 10, October 2018, Pages 2582â€“2584, https://doi.org/10.1093/molbev/msy159
 
     --------------------------------------
@@ -75,7 +75,7 @@ HMMCleaner V1_8_VR2 (default)
   rm -rf /var/lib/apt/lists/*
 
 		svn checkout https://github.com/ranwez/MACSE_V2_PIPELINES/trunk/OMM_MACSE
-    rm -rf /OMM_MACSE/V*_FREEZED; rm -rf /UTILS/macse_v2.03.jar; rm -rf /UTILS/macse_v2.05.jar
+    rm -rf /OMM_MACSE/V*_FREEZED; rm -rf /UTILS/macse_v2.03.jar; rm -rf /UTILS/macse_v2.05.jar; ; rm -rf /UTILS/macse_v2.07.jar
 		svn checkout https://github.com/ranwez/MACSE_V2_PIPELINES/trunk/UTILS
 
     chmod 755 /OMM_MACSE/*.sh
@@ -97,7 +97,7 @@ HMMCleaner V1_8_VR2 (default)
     export LG_MAFFT="mafft"
     export LG_MUSCLE="muscle"
     export LG_PRANK="/prank/bin/prank"
-    export LG_MACSE="/UTILS/macse_v2.07.jar"
+    export LG_MACSE="/UTILS/macse_v2.08.jar"
     export LG_HMMCLEANER="/UTILS/HMMcleanerV1_8_VR2/HMMcleanAA_VR.pl "
 
 
