@@ -6,13 +6,13 @@ From: ubuntu:16.04
 %help
 
 
-This container launches the OMM_MACSE pipeline used to buid the OrthoMaM Database (V11).
+This container launches the OMM_MACSE pipeline used to buid the OrthoMaM Database (V12).
 =======================================================================================
 
-    usage (basic): OMM_MACSE_v11.05.sif --out_dir out_dir --out_file_prefix out_file_prefix --in_seq_file nucleotide_coding_sequences_to_align.fasta
-    usage (help) : OMM_MACSE_v11.05.sif
+    usage (basic): OMM_MACSE_v12.01.sif --out_dir out_dir --out_file_prefix out_file_prefix --in_seq_file nucleotide_coding_sequences_to_align.fasta
+    usage (help) : OMM_MACSE_v12.01.sif
 
-    usage (example): OMM_MACSE_v11.05.sif --in_seq_file LOC_48720.fasta --out_dir RES_LOC_48720 --out_file_prefix LOC_48720
+    usage (example): OMM_MACSE_v12.01.sif --in_seq_file LOC_48720.fasta --out_dir RES_LOC_48720 --out_file_prefix LOC_48720
 
 For more details please see the pipeline documentation pages on the MACSE website:
 ==================================================================================
@@ -103,13 +103,13 @@ HMMCleaner V1_8_VR2 (default)
 
 
 %runscript
-    exec bash /OMM_MACSE/S_OMM_MACSE_V11.05.sh "$@"
+    exec bash /OMM_MACSE/S_OMM_MACSE_v12.01.sh "$@"
 
 %files
 
 %labels
     Author Vincent Ranwez
 
-#sudo singularity  build OMM_MACSE_V10.01.sif OMM_MACSE_V10.01_sing.def
-#singularity run OMM_MACSE_V10.01.sif
-#singularity run-help OMM_MACSE_V10.01.sif
+#sudo singularity  build OMM_MACSE_V10.01.sif OMM_MACSE_V12.01_sing.def
+#singularity run OMM_MACSE_V12.01.sif
+#singularity run-help OMM_MACSE_V12.01.sif
