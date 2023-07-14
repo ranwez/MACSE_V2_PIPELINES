@@ -75,7 +75,7 @@ HMMCleaner V1_8_VR2 (default)
   rm -rf /var/lib/apt/lists/*
 
 		svn checkout https://github.com/ranwez/MACSE_V2_PIPELINES/trunk/OMM_MACSE
-    rm -rf /OMM_MACSE/V*_FREEZED; rm -rf /UTILS/macse_v2.03.jar; rm -rf /UTILS/macse_v2.05.jar; ; rm -rf /UTILS/macse_v2.07.jar
+    rm -rf /OMM_MACSE/V*_FREEZED; rm -rf /UTILS/macse_v2.03.jar; rm -rf /UTILS/macse_v2.05.jar; rm -rf /UTILS/macse_v2.07.jar
 		svn checkout https://github.com/ranwez/MACSE_V2_PIPELINES/trunk/UTILS
 
     chmod 755 /OMM_MACSE/*.sh
