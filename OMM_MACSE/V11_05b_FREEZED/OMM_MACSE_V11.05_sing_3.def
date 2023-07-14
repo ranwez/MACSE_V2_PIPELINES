@@ -1,0 +1,115 @@
+
+BootStrap: library
+From: ubuntu:16.04
+
+
+%help
+
+
+This container launches the OMM_MACSE pipeline used to buid the OrthoMaM Database (V11).
+=======================================================================================
+
+    usage (basic): OMM_MACSE_v11.05.sif --out_dir out_dir --out_file_prefix out_file_prefix --in_seq_file nucleotide_coding_sequences_to_align.fasta
+    usage (help) : OMM_MACSE_v11.05.sif
+
+    usage (example): OMM_MACSE_v11.05.sif --in_seq_file LOC_48720.fasta --out_dir RES_LOC_48720 --out_file_prefix LOC_48720
+
+For more details please see the pipeline documentation pages on the MACSE website:
+==================================================================================
+https://bioweb.supagro.inra.fr/macse
+
+
+If you use this pipeline please cite:
+=====================================
+
+OrthoMam v10 (the paper describing this pipeline)
+    Celine Scornavacca, Khalid Belkhir, Jimmy Lopez, Rémy Dernat, Frédéric Delsuc, Emmanuel J P Douzery, Vincent Ranwez, OrthoMaM v10: Scaling-Up Orthologous Coding Sequence and Exon Alignments with More than One Hundred Mammalian Genomes, Molecular Biology and Evolution, Volume 36, Issue 4, April 2019, Pages 861â€“862, https://doi.org/10.1093/molbev/msz015
+
+    --------------------------------------
+
+MACSE V2.05 (extensively used in this pipeline)
+    Vincent Ranwez, Emmanuel J P Douzery, Cédric Cambon, Nathalie Chantret, Frédéric Delsuc, MACSE v2: Toolkit for the Alignment of Coding Sequences Accounting for Frameshifts and Stop Codons, Molecular Biology and Evolution, Volume 35, Issue 10, October 2018, Pages 2582â€“2584, https://doi.org/10.1093/molbev/msy159
+
+    --------------------------------------
+
+MAFFT v7.271 (default) or MUSCLE v3.8.31 or PRANK v170427(depending on selected options)
+    Katoh K., Standley D.M. (2013). MAFFT multiple sequence alignment software version 7: improvements in performance and usability. Molecular biology and evolution, 30(4), 772-780. Edgar R.C. (2004).
+    Edgar RC. (2004). MUSCLE: multiple sequence alignment with high accuracy and high throughput. Nucleic acids research, 32(5), 1792-1797.
+    Löytynoja (2014). Phylogeny-aware alignment with PRANK. Methods Mol Biol 1079:155–170
+    --------------------------------------
+
+HMMCleaner V1_8_VR2 (default)
+    Di Franco, Arnaud, et al. Evaluating the usefulness of alignment filtering methods to reduce the impact of errors on evolutionary inferences. BMC Evolutionary Biology, vol. 19, no. 1, 2019. Gale Academic Onefile, Accessed 13 Oct. 2019.
+
+    Note that this script used a modified version (V1_8_VR2) of HMMCleaner V1_8 developped by Raphael Poujol
+        Vincent Ranwez modified the original perl script so that
+            1. sequences and sequence names are unchanged even when they contain unusual characters
+            2. all output files are saved in the current directory (rather that being spread in the directory containing the input fasta file and HMMCleaner perl script)
+
+            HMMCleaner has since been re-written by Arnaud Di Franco and a more recent release of HMMCleaner is available here: https://metacpan.org/pod/HmmCleaner.pl
+
+%post
+  apt-get -y update
+
+  apt-get -y update
+  apt-get -y install unzip
+  apt-get -y install wget
+  apt-get -y install openjdk-8-jre
+  apt-get -y install hmmer=3.1b2-2
+  apt-get -y install muscle=1:3.8.31+dfsg-1
+  apt-get -y install mafft=7.271-1
+
+  ## neened to install subversion
+  apt-get -y install software-properties-common
+  add-apt-repository universe
+  apt-get -y update
+  apt-get -y install subversion
+  ## end of subversion dependencies
+
+  ## install prank
+  apt-get install libc6
+  wget http://wasabiapp.org/download/prank/prank.linux64.170427.tgz
+  tar -zxvf prank.linux64.170427.tgz
+  ##
+
+  rm -rf /var/lib/apt/lists/*
+
+		svn checkout https://github.com/ranwez/MACSE_V2_PIPELINES/trunk/OMM_MACSE
+    rm -rf /OMM_MACSE/V*_FREEZED; rm -rf /UTILS/macse_v2.03.jar
+		svn checkout https://github.com/ranwez/MACSE_V2_PIPELINES/trunk/UTILS
+
+    chmod 755 /OMM_MACSE/*.sh
+    chmod -R 755 /prank
+    chmod -R 755 /UTILS/LGS_Fasta/*.sh
+
+		# Folders neeeded for the cirad Cluster
+			 mkdir /work
+			 mkdir /homedir
+			 mkdir /projects
+			 mkdir -p /gs7k1/home/
+			 mkdir -p /usr1/compte_mess
+    # folders needed for the migale cluster
+      mkdir -p /projet/extern/save/; mkdir -p /projet/montpellier/work; mkdir -p /projet/montpellier/work
+
+%environment
+    export LC_ALL=C
+    export LG_UTILS_PATH="/UTILS"
+    export LG_MAFFT="mafft"
+    export LG_MUSCLE="muscle"
+    export LG_PRANK="/prank/bin/prank"
+    export LG_MACSE="/UTILS/macse_v2.05.jar"
+    export LG_HMMCLEANER="/UTILS/HMMcleanerV1_8_VR2/HMMcleanAA_VR.pl "
+
+
+
+%runscript
+    exec bash /OMM_MACSE/S_OMM_MACSE_V11.05.sh "$@"
+
+%files
+
+%labels
+    Author Vincent Ranwez
+
+#sudo singularity  build OMM_MACSE_V10.01.sif OMM_MACSE_V10.01_sing.def
+#singularity run OMM_MACSE_V10.01.sif
+#singularity run-help OMM_MACSE_V10.01.sif
