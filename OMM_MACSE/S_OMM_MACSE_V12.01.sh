@@ -15,7 +15,7 @@ printf "\n\n" # separate script message from the rest
 function quit_pb_option() {
     printf "\n\nThis script aligns sequences using: 1) MACSE pre-filtering, 2) MACSE alignment to find frameshifts, 3) MAFFT for aligning the resulting AA sequences, and 4) HMMcleaner for cleaning resulting alignments.\n"
     printf "\nyour command line is incorrect please check your options"
-    printf "\n usage example:\n$SCRIPT_NAME --out_dir out_dir --out_file_prefix PREFIX --in_seq_file seq_file.fasta [--genetic_code_number code_number] [--alignAA_soft MAFFT/MUSCLE/PRANK] ][--aligner_extra_option \"--localpair --maxiterate 1000\"] [--min_percent_NT_at_ends 0.7] [--out_detail_dir SAVE_DETAILS/] [--in_seq_lr_file less_reliable_seq_file.fasta] [--java_mem 500m] [--prefiltering_min_MEM 6] [--no_prefiltering] [--no_FS_detection] [--no_filtering] [--no_postfiltering] [--min_seqToKeepSite] [--replace_FS_by_gaps] [--save_details] [--debug]\n"
+    printf "\n usage example:\n$SCRIPT_NAME --out_dir out_dir --out_file_prefix PREFIX --in_seq_file seq_file.fasta [--genetic_code_number code_number] [--alignAA_soft MAFFT/MUSCLE/PRANK] ][--aligner_extra_option \"--localpair --maxiterate 1000\"] [--min_percent_NT_at_ends 0.7] [--out_detail_dir SAVE_DETAILS/] [--in_seq_lr_file less_reliable_seq_file.fasta] [--java_mem 500m] [--prefiltering_min_MEM_length 6] [--no_prefiltering] [--no_FS_detection] [--no_filtering] [--no_postfiltering] [--min_seqToKeepSite] [--replace_FS_by_gaps] [--save_details] [--debug]\n"
     printf "\n\nFor further details please check the documentation on MACSE website: https://bioweb.supagro.inra.fr/macse\n\n"
     exit 1
 }
@@ -40,7 +40,7 @@ while (( $# > 0 )); do
     case "$1" in
 	     --in_seq_file)                IN_SEQ_FILE=$(get_in_file_param "$1" "$2")               || quit_pb_option ; shift 2;;
 	     --in_seq_lr_file)             IN_SEQ_LR_FILE=$(get_in_file_param "$1" "$2")            || quit_pb_option ; HAS_SEQ_LR=1; SEQ_LR_OPT="-seq_lr $IN_SEQ_LR_FILE"; shift 2;;
-	     --prefiltering_min_MEM)       min_MEM=$(get_in_int_param "$1" "$2")                   || quit_pb_option ; MIN_MEM_OPT=" -min_MEM $min_MEM"; shift 2;;
+	     --prefiltering_min_MEM_length)       min_MEM=$(get_in_int_param "$1" "$2")                   || quit_pb_option ; MIN_MEM_OPT=" -min_MEM_length $min_MEM"; shift 2;;
        --genetic_code_number)        in_geneticCode=$(get_in_int_param "$1" "$2")             || quit_pb_option ; GC_OPT=" -gc_def $in_geneticCode"; shift 2;;
        --java_mem)                   JAVA_MEM="$2"                                            || quit_pb_option ; shift 2;;
        --out_dir)                    OUT_DIR=$(get_out_dir_param "$1" "$2")                  || quit_pb_option ; shift 2;;
