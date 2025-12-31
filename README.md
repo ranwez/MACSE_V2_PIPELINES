@@ -56,20 +56,23 @@ Nextflow [[Di Tommaso, 2017]](#Di_Tommaso_2017) enables scalable and reproducibl
 
 Nextflow separates the workflow itself from the directive regarding the correct way to execute it in the environment. One key advantage of Nextflow is that, by changing slightly the “nextflow.config” file, the same workflow will be parallelized and launched to exploit the full resources of a high performance computing (HPC) cluster.
 
+## Related tools (GUI or terminal-based sequence/alignment viewers)
+- **[Seaview](https://doua.prabi.fr/software/seaview)** - A great Multiplatform GUI for molecular phylogeny.
+- **[SeqTUI](https://github.com/ranwez-search/SeqTUI/)** - A fast terminal-based viewer and command-line toolkit for sequences. View, translate, convert (to FASTA), and combine sequences aligned or not — all from the terminal.
+
 ## References
-<a id="Di_Tommaso_2017"></a> Di Tommaso, P., Chatzou, M., Floden, E. W., Barja, P. P., Palumbo, E., and Notredame, C.(2017). Nextflow enables reproducible computational workflows. Nature Biotechnology,35(4):316–319. [Nextflow web site](https://www.nextflow.io/)
+- Nextflow enables reproducible computational workflows. <a id="Di_Tommaso_2017"></a> Di Tommaso, P., Chatzou, M., Floden, E. W., Barja, P. P., Palumbo, E., and Notredame, C.(2017). Nature Biotechnology,35(4):316–319. [Nextflow web site](https://www.nextflow.io/)
 
-<a id="Kurtzer_2017"></a> Kurtzer, G. M., Sochat, V., and Bauer, M. W. (2017). Singularity: Scientific containers formobility of compute. PloS One, 12(5):e0177459. [singularity web site](https://sylabs.io/)
+- Singularity: Scientific containers formobility of compute. <a id="Kurtzer_2017"></a> Kurtzer, G. M., Sochat, V., and Bauer, M. W. (2017). PloS One, 12(5):e0177459. [singularity web site](https://sylabs.io/)
 
-<a id="Ranwez_2011"></a>MACSE: Multiple Alignment of Coding SEquences accounting for frameshifts and stop codons.
-Vincent Ranwez, Sébastien Harispe, Frédéric Delsuc, Emmanuel JP Douzery
+- <a id="Ranwez_2011"></a>MACSE: Multiple Alignment of Coding SEquences accounting for frameshifts and stop codons.
+V. Ranwez, S. Harispe, F., E. JP Douzery
 PLoS One 2011, 6(9): e22594. [MACSE web site](https://www.agap-ge2pop.org/macse/)
 
-<a id="Ranwez_2018"></a> MACSE v2: Toolkit for the Alignment of Coding Sequences Accounting for Frameshifts and Stop Codons.  
-Vincent Ranwez, Emmanuel JP Douzery, Cédric Cambon, Nathalie Chantret, Frédéric Delsuc  
-*Molecular Biology and Evolution* 2018, 35(10):2582–2584. doi:10.1093/molbev/msy159. PMID: 30165589; PMCID: PMC6188553.
+- <a id="Ranwez_2018"></a> MACSE v2: Toolkit for the Alignment of Coding Sequences Accounting for Frameshifts and Stop Codons.  
+V. Ranwez, E. JP Douzery, C. Cambon, N. Chantret, F. Delsuc. *Molecular Biology and Evolution* 2018, 35(10):2582–2584. [doi:10.1093/molbev/msy159](https://doi.org/10.1093/molbev/msy159).
 
-<a id="ranwez_2020_tuto"></a> Ranwez V, Chantret N, Delsuc F. Aligning Protein-Coding Nucleotide Sequences with MACSE. *Methods Mol Biol.* 2021;2231:51–70. doi:10.1007/978-1-0716-1036-7_4. PMID: 33289886.
+- <a id="ranwez_2020_tuto"></a> Aligning Protein-Coding Nucleotide Sequences with MACSE. Ranwez V, Chantret N, Delsuc F. *Methods Mol Biol.* 2021;2231:51–70. [doi:10.1007/978-1-0716-1036-7_4](https://hal.science/hal-03099847v1/file/Ranwez-MethMolBiol-HAL.pdf). PMID: 33289886.
 
-<a id="delsuc_2020">Accurate alignment of (meta)barcoding datasets using MACSE. Frédéric Delsuc and Vincent Ranwez (2020). In Scornavacca, C., Delsuc, F., and Galtier, N., editors, Phylogenetics
-in the Genomic Era, chapter No. 2.3, pp. 2.3:1–2.3:30. No commercial publisher | Authors open access book. The book is freely available at [https://hal.inria.fr/PGE](https://hal.inria.fr/PGE). </a>
+- <a id="delsuc_2020"> </a> Accurate alignment of (meta)barcoding datasets using MACSE. F. Delsuc and V. Ranwez (2020). In Scornavacca, C., Delsuc, F., and Galtier, N., editors, Phylogenetics
+in the Genomic Era, chapter No. 2.3, pp. 2.3:1–2.3:30, [https://hal.inria.fr/PGE](https://hal.inria.fr/PGE).
