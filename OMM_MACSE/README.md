@@ -22,9 +22,23 @@ Both pipelines include four optional filtering steps:
 
 All these filtering steps are active by default but can be individually turned OFF and the minimal percentage of nucleotides used for the final trimming step can be adjusted. The pipeline also provide detailed traceability information concerning the filtering processes.
 
-## Usage example
+## Usage examples (files in github examples/ folder)
 ```
-./OMM_MACSE_V12.02.sif --in_seq_file Magnoliophyta_rbcl_NT.fasta --out_dir ALIGN_RBCL_MAGNO --out_file_prefix magno_rbcl --genetic_code_number 11 --min_percent_NT_at_ends 0.2
+# running directly with the singularity container
+./OMM_MACSE_V12.02.sif --in_seq_file examples/Magnoliophyta_rbcl_NT.fasta --out_dir ALIGN_RBCL_MAGNO --out_file_prefix magno_rbcl --genetic_code_number 11 --min_percent_NT_at_ends 0.2
+
+# apptainer run
+apptainer run OMM_MACSE_V12.02.sif --in_seq_file examples/LOC_48720.fasta --out_dir RES_LOC_48720 --out_file_prefix LOC_48720
+
+# getting help
+apptainer run-help OMM_MACSE_V12.02.sif
+
+# using a specific tool (e.g to check version or get help)
+apptainer exec OMM_MACSE_V12.02.sif mafft --help
+
+# passing extra options to the aligner (here MAFFT)
+./OMM_MACSE_V12.02.sif --in_seq_file examples/LOC_48720.fasta --out_dir RES_LOC_48720_TEST --aligner_extra_option "--maxiterate 100 --globalpair" --out_file_prefix LOC_48720
+
 ```
 
 ## Related tools (GUI or terminal-based sequence/alignment viewers)
