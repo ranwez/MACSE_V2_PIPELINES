@@ -10,9 +10,9 @@ A wide range of molecular analyses relies on multiple sequence alignments (MSA).
 Various strategies can be built using the MACSE toolkit to handle datasets of various sizes and containing various types of sequences (contigs, pseudogenes, barcoding sequences).
 
 ## The OMM_MACSE pipeline
-The OMM_MACSE pipeline was originally developed to produce the alignments of the [OrthoMaM database](http://orthomam1.mbb.univ-montp2.fr:8080/OrthoMaM_v10b6/).
+The OMM_MACSE pipeline was originally developed to produce the alignments of the [OrthoMaM database](https://orthomam.mbb.cnrs.fr).
 
-To ease the alignment of coding nucleotide sequences, we provide this ready to use alignment pipeline, which include optional filtering steps. This pipeline output the (filtered) nucleotide alignment, the corresponding (filtered) amino acid ones and the detail of the filtering steps (if some filtering steps were selected). By leveraging an external amino alignment software (MAFFT, MUSCLE or PRANK) it can handle hundreds of sequences of several kb. For smaller dataset (dozen of sequences) you may consider using the AlFiX pipeline. For barcoding analyses, please see our [dedicated strategies](https://github.com/ranwez/MACSE_V2_PIPELINES/). For more details please see the [online documentation](https://bioweb.supagro.inra.fr/macse/index.php?menu=docPipeline/docPipelineHtml) and the associated papers.
+To ease the alignment of coding nucleotide sequences, we provide this ready to use alignment pipeline, which include optional filtering steps. This pipeline output the (filtered) nucleotide alignment, the corresponding (filtered) amino acid ones and the detail of the filtering steps (if some filtering steps were selected). By leveraging an external amino alignment software (MAFFT, MUSCLE or PRANK) it can handle hundreds of sequences of several kb. For smaller dataset (dozen of sequences) you may consider using the AlFiX pipeline. For barcoding analyses, please see our [dedicated strategies](https://github.com/ranwez/MACSE_V2_PIPELINES/). For more details please see the [online documentation](https://www.agap-ge2pop.org/macse/pipeline-documentation/) and the associated papers.
 
 Both pipelines include four optional filtering steps:
 1. a prefiltering performed before sequence alignment to mask non homologous sequence fragments that is done using trimNonHomologousFragments
@@ -24,5 +24,9 @@ All these filtering steps are active by default but can be individually turned O
 
 ## Usage example
 ```
-./OMM_MACSE_V10.02.sif --in_seq_file Magnoliophyta_RBCL_100seq_NT.fasta --out_dir ALIGN_RBCL_MAGNO --out_file_prefix magno_rbcl --genetic_code_number 11 --min_percent_NT_at_ends 0.2
+./OMM_MACSE_V12.02.sif --in_seq_file Magnoliophyta_rbcl_NT.fasta --out_dir ALIGN_RBCL_MAGNO --out_file_prefix magno_rbcl --genetic_code_number 11 --min_percent_NT_at_ends 0.2
 ```
+
+## Related tools (GUI or terminal-based sequence/alignment viewers)
+- **[Seaview](https://doua.prabi.fr/software/seaview)** - A great Multiplatform GUI for molecular phylogeny.
+- **[SeqTUI](https://github.com/ranwez-search/SeqTUI/)** - A fast terminal-based viewer and command-line toolkit for sequences. View, translate, convert (to FASTA), and combine sequences aligned or not — all from the terminal.

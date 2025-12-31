@@ -19,7 +19,7 @@ These two pipelines are described in our MACSE tutorial paper [[ranwez et al. 20
 
 These pipelines are detailed in our book chapter dedicated to MACSE and barcoding datasets [[Delscuc & Ranwez, 2020]](#delsuc_2020). While using **macse_barcode** is the easiest solution, chaining **build_ref_align** and **enrich_align** allows to check the quality of the proposed reference alignment and to manually curate it, if needed, before using it to align the barcode sequences.
 
-We used the **macse_barcode** pipeline to align **COI**, **matK** and **rbcL** sequences for numerous taxonomic groups, all resulting alignments are available [here](https://bioweb.supagro.inra.fr/macse/index.php?menu=download_Barcoding).
+We used the **macse_barcode** pipeline to align **COI**, **matK** and **rbcL** sequences for numerous taxonomic groups, all resulting alignments are available [here](https://www.agap-ge2pop.org/barcoding-alignments/) and on [Zenodo](https://zenodo.org/records/14185813) (thanks to Roderic Page).
 
 ## MACSE overview
 
@@ -34,19 +34,21 @@ MACSE: Multiple Alignment of Coding SEquences accounting for frameshifts and sto
 Vincent Ranwez, Sébastien Harispe, Frédéric Delsuc, Emmanuel JP Douzery
 PLoS One 2011, 6(9): e22594.
 
-More information (including documentations and tutorials) are available on the [MACSE website](https://bioweb.supagro.inra.fr/macse)
+More information (including documentations and tutorials) are available on the [MACSE website](https://www.agap-ge2pop.org/macse/)
 
 
-## Singularity overview
+## Singularity/Apptainer overview
 
 A singularity container [[Kurtzer, 2017]](#Kurtzer_2017) contains everything that is needed to execute a specific task. The person building the container has to handle dependencies and environment configuration so that the end-user do not need to bother. The file specifying the construction of the container is a simple text file called a recipe (we provide the recipe of our container as well as the containers). As our scripts/pipelines often relies on several other scripts and external tools (e.g. MAFFT) singularity container is very handy as the end user just need to install singularity and download the container without having to care for installing dependencies or setting environment variables.
 
-A brief introduction to singularity is available [here](https://bioweb.supagro.inra.fr/macse/index.php?menu=pipelines).
-
+A brief introduction to singularity is available [here](https://www.agap-ge2pop.org/macse/index.php?menu=pipelines).
 If you got an error message stating that your input file does not exist it is probably related to the fact that the folder containing them is not visible from the singularity container. A solution found by one user is to use the [SINGULARITY_BINDPATH variable](https://sylabs.io/guides/3.0/user-guide/bind_paths_and_mounts.html):   
 ```
 export SINGULARITY_BINDPATH="/path/to/fasta"
 ```
+
+**Note:** Singularity is now called **Apptainer**. OMM_MACSE v12.02 and later have been built and tested with Apptainer on several HPC clusters.
+
 
 ## Nextflow overview
 
@@ -61,9 +63,13 @@ Nextflow separates the workflow itself from the directive regarding the correct 
 
 <a id="Ranwez_2011"></a>MACSE: Multiple Alignment of Coding SEquences accounting for frameshifts and stop codons.
 Vincent Ranwez, Sébastien Harispe, Frédéric Delsuc, Emmanuel JP Douzery
-PLoS One 2011, 6(9): e22594. [MACSE web site](https://bioweb.supagro.inra.fr/macse/i)
+PLoS One 2011, 6(9): e22594. [MACSE web site](https://www.agap-ge2pop.org/macse/)
 
-<a id="ranwez_2020_tuto"></a> Aligning protein-coding nucleotide sequences with MACSE. V. Ranwez, N. Chantret, F Delsuc. To appear in Methods in Molecular Biology (2020).
+<a id="Ranwez_2018"></a> MACSE v2: Toolkit for the Alignment of Coding Sequences Accounting for Frameshifts and Stop Codons.  
+Vincent Ranwez, Emmanuel JP Douzery, Cédric Cambon, Nathalie Chantret, Frédéric Delsuc  
+*Molecular Biology and Evolution* 2018, 35(10):2582–2584. doi:10.1093/molbev/msy159. PMID: 30165589; PMCID: PMC6188553.
+
+<a id="ranwez_2020_tuto"></a> Ranwez V, Chantret N, Delsuc F. Aligning Protein-Coding Nucleotide Sequences with MACSE. *Methods Mol Biol.* 2021;2231:51–70. doi:10.1007/978-1-0716-1036-7_4. PMID: 33289886.
 
 <a id="delsuc_2020">Accurate alignment of (meta)barcoding datasets using MACSE. Frédéric Delsuc and Vincent Ranwez (2020). In Scornavacca, C., Delsuc, F., and Galtier, N., editors, Phylogenetics
 in the Genomic Era, chapter No. 2.3, pp. 2.3:1–2.3:30. No commercial publisher | Authors open access book. The book is freely available at [https://hal.inria.fr/PGE](https://hal.inria.fr/PGE). </a>
