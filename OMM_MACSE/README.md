@@ -9,6 +9,22 @@ A wide range of molecular analyses relies on multiple sequence alignments (MSA).
 
 Various strategies can be built using the MACSE toolkit to handle datasets of various sizes and containing various types of sequences (contigs, pseudogenes, barcoding sequences).
 
+## installation / getting sif image
+A brief introduction to singularity is available [here](https://www.agap-ge2pop.org/macse/index.php?menu=pipelines).
+The OMM_MACSE .sif image is available 
+
+- from [sylab/apptainer hub](https://cloud.sylabs.io/library/vranwez/default/omm_macse) and can be pulled using:
+
+```bash
+singularity pull --arch amd64 library://vranwez/default/omm_macse:v12.02
+```
+- from GitHub Container Registry ORAS/OCI and can be pulled using:
+
+```bash
+oras pull ghcr.io/ranwez/macse_v2_pipelines/omm_macse:v12.02
+apptainer pull oras://ghcr.io/ranwez/macse_v2_pipelines/omm_macse:v12.02
+```
+
 ## The OMM_MACSE pipeline
 The OMM_MACSE pipeline was originally developed to produce the alignments of the [OrthoMaM database](https://orthomam.mbb.cnrs.fr).
 
