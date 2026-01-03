@@ -22,6 +22,9 @@ singularity pull --arch amd64 library://vranwez/default/omm_macse:v12.02
 
 ```bash
 oras pull ghcr.io/ranwez/macse_v2_pipelines/omm_macse:v12.02
+```
+or
+```bash
 apptainer pull oras://ghcr.io/ranwez/macse_v2_pipelines/omm_macse:v12.02
 ```
 
