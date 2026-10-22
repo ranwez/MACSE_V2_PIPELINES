@@ -19,6 +19,20 @@ This pipeline takes as input a sequence of reference and a set of input sequence
 
 This pipeline is encapsulated in a singularity container.
 
+## installation / getting sif image
+A brief introduction to singularity is available [here](https://www.agap-ge2pop.org/macse/index.php?menu=pipelines).
+The representative_seqs .sif image (sha256:b3f6b96bbae831d0131a5f22ce36f602ae17a438606d82526806b1a325968f18) is available from GitHub Container Registry ORAS/OCI and can be pulled using:
+
+```bash
+oras pull ghcr.io/ranwez/macse_v2_pipelines/omm_macse:v12.02
+```
+or
+```bash
+apptainer pull oras://ghcr.io/ranwez/macse_v2_pipelines/omm_macse:v12.02
+```
+
+
+
 ## Usage example
 A basic usage is as following:
 ```
