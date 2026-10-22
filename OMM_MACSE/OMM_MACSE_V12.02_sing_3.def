@@ -109,5 +109,8 @@ HMMCleaner V1_8_VR2 (default)
 
 # build using apptainer (1.3.6) on IFB VM
 # apptainer build OMM_MACSE_V12.02.sif OMM_MACSE_V12.02_sing_3.def
+# apptainer run OMM_MACSE_V12.02.sif --in_seq_file examples/LOC_48720.fasta --out_dir RES_LOC_48720 --out_file_prefix LOC_48720
+# apptainer run-help OMM_MACSE_V12.02.sif
+
 #singularity run OMM_MACSE_V12.02.sif
 #singularity run-help OMM_MACSE_V12.02.sif

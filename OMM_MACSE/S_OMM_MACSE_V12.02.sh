@@ -251,7 +251,7 @@ if(( ${FILTERING} > 0 )); then
 fi
 
 cp $script_dir/readme_output.txt $OUT_DIR/
-printf "\n\nThis analysis was done with \n\t-script: $script_name\n\t-parmaeters:$OPTIONS\n\t-directory:$wd_dir\n\t-date:$DATE:" >> $OUT_DIR/readme_output.txt
+printf "\n\nThis analysis was done with \n\t-script: $script_name\n\t-parameters:$OPTIONS\n\t-directory:$wd_dir\n\t-date:$DATE:" >> $OUT_DIR/readme_output.txt
 
 cd $wd_dir
 
